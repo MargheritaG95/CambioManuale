@@ -44,7 +44,7 @@
     /* Drawer */
     .drawer{ position: fixed; inset:0; display:none; }
     .drawer.is-open{ display:block; }
-    .drawer__backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.65); z-index:1; }
+    .drawer__backdrop{ position:absolute; inset:0; background:#0a1a2b; z-index:1; }
    /* prima avevi height:100% => la tendina occupava tutto lo schermo */
 .drawer__panel{
   position:absolute;
@@ -54,8 +54,8 @@
   height: auto;                            /* <— si ferma all’ultima voce */
   max-height: calc(100vh - var(--nav-h, 0px)); /* <— ma non supera lo schermo */
   overflow: auto;                          /* scroll solo se le voci sono troppe */
-  background:#091d36;
-  color:#091d36;
+  background:#0a1a2b;
+  color:#0a1a2b;
   border-right:1px solid var(--line);
   box-shadow:8px 0 30px rgba(0,0,0,.4);
   padding:18px;
@@ -164,7 +164,7 @@
     }
     .designer__img img{ width:100%; border-radius:12px; }
     .designer__label{font-size:12px; row-gap:1.2em; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
-    .designer__name{margin:4px 0;font-size:20px;color:var(--beige)} /* include anche gli anni su desktop */
+    .designer__name{margin:4px 0;row-gap:1.2em;font:20px;color:var(--beige)} /* include anche gli anni su desktop */
   </style>
 </head>
 <body>
