@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -15,7 +16,7 @@
     html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--blue-deep) 0%, var(--blue-deep-2) 100%);color:var(--ink);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
     *,*:before,*:after{box-sizing:border-box}
 
-    /* ====== Navbar ====== */
+    /* ====== Navbar (nessun cambio colore all'apertura) ====== */
     .navbar{
       position: sticky; top:0; z-index:1000;
       backdrop-filter: blur(6px);
@@ -40,23 +41,22 @@
     .hamburger svg{ width:22px; height:22px; stroke: var(--ink); fill:none; stroke-width:2.2 }
     .brand-title{ font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
 
-    /* ====== Drawer ====== */
+    /* Drawer */
     .drawer{ position: fixed; inset:0; display:none; }
     .drawer.is-open{ display:block; }
     .drawer__backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.65); z-index:1; }
     .drawer__panel{
       position:absolute; top:0; left:0; height:100%; width:min(86vw, 320px);
       background:#081424; border-right:1px solid var(--line);
-      box-shadow:8px 0 30px rgba(0,0,0,.4); padding:18px;
-      display:flex; flex-direction:column; gap:12px; z-index:2;
+      box-shadow:8px 0 30px rgba(0,0,0,.4); padding:18px; display:flex; flex-direction:column; gap:12px; z-index:2;
     }
     .drawer a{ color:var(--ink); text-decoration:none; padding:12px 6px; border-radius:8px; font-size:16px; transition: background .2s ease; }
     .drawer a:hover{ background: rgba(255,255,255,.12); }
 
-    /* ====== Pagina ====== */
+    /* Pagina */
     .page{max-width:var(--maxw);margin:0 auto;padding: 18px 16px; position: relative;}
 
-    /* ====== CHIP ====== */
+    /* CHIP */
     .chip{ position:absolute; top:5px; right:16px; display:inline-flex; align-items:center; gap:6px;
       padding:4px 10px; border-radius:999px; border:1px solid rgba(200,171,110,.55);
       background: radial-gradient(380px 90px at 50% 0%, rgba(255,255,255,.1), rgba(255,255,255,0)); box-shadow:var(--shadow); white-space:nowrap; }
@@ -88,7 +88,7 @@
     .spec .label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
     .spec .value{font-size: clamp(18px,2.6vw,22px); font-weight:600; color:var(--beige)}
 
-    /* ====== BLOCCO MOBILE NASCOSTO DI DEFAULT ====== */
+    /* BLOCCO MOBILE (nascosto su desktop/tablet) */
     .spec-row-mobile{ display:none; }
 
     /* ====== Gallery ====== */
@@ -139,9 +139,9 @@
     .divider{height:1px;background: linear-gradient(90deg, rgba(200,171,110,0), rgba(200,171,110,.8), rgba(200,171,110,0));margin:10px 0 14px}
     .story-subtitle { font-size: clamp(15px, 2vw, 20px); font-weight: 400; color: var(--beige); margin: 16px 0 8px; line-height: 1.3; }
 
-    /* ====== Designer (DESKTOP invariato) ====== */
+    /* ====== Designer (DESKTOP: come originale) ====== */
     .designer{
-      display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center;
+      display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; 
       margin-top:var(--gap); padding:14px;
       border:1px solid var(--line); border-radius: var(--radius-s);
       background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
@@ -151,48 +151,7 @@
     }
     .designer__img img{ width:100%; border-radius:12px; }
     .designer__label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
-    .designer__name{margin:4px 0;font-size:20px;color:var(--beige)}
-    .designer__years{ display:inline; margin-left:6px; color:var(--muted); font-size:16px; }
-
-    /* ====== SOLO MOBILE ====== */
-    @media (max-width:560px){
-      /* Topstrip mobile */
-      .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
-      .topstrip .spec{ display:none !important; } /* nascondi i box desktop */
-      .spec-row-mobile{
-        display:grid;
-        grid-template-columns: repeat(5, minmax(0,1fr));
-        gap: 8px;
-        align-items:flex-start;
-      }
-      .spec-mini{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-      .spec-mini .label{
-        font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1;
-        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      }
-      .spec-mini .value{
-        font-size:12px; font-weight:600; color:var(--beige); line-height:1.1;
-        white-space:normal; display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow:hidden;
-      }
-      .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
-
-      /* Designer mobile:
-         riga 1 = foto (col1) + titoli (col2);
-         riga 2 = paragrafo allineato da sx foto a dx titoli (col1 -> col2) */
-      .designer{
-        display:grid;
-        grid-template-columns: 80px 1fr;
-        grid-template-rows: auto auto;
-        gap:8px; padding:10px; align-items:start;
-      }
-      .designer__img{ grid-column:1/2; grid-row:1/2; width:80px; height:80px; }
-      .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
-      .designer__titles{ grid-column:2/3; grid-row:1/2; display:grid; grid-template-rows:auto auto auto; row-gap:2px; min-width:0; }
-      .designer__label{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
-      .designer__name{ font-size:18px; color:var(--beige); margin:0; display:block; }
-      .designer__years{ display:block; margin:0; font-size:14px; color:var(--muted); }
-      .designer__text{ grid-column:1/3; grid-row:2/3; margin:8px 0 0 0; font-size:14px; } /* sotto e allineato ai bordi di foto+titoli */
-    }
+    .designer__name{margin:4px 0;font-size:20px;color:var(--beige)} /* include anche gli anni su desktop */
   </style>
 </head>
 <body>
@@ -251,7 +210,7 @@
       <div class="spec"><div class="label">Velocità max</div><div class="value">270 km/h</div></div>
       <div class="spec"><div class="label">Consumo</div><div class="value">15–18 l/100km</div></div>
 
-      <!-- Mobile: 5 colonne compatte -->
+      <!-- Mobile: 5 colonne compatte (mostrate solo su mobile) -->
       <div class="spec-row-mobile" aria-hidden="true">
         <div class="spec-mini"><div class="label">Anno</div><div class="value">1963<br>1965</div></div>
         <div class="spec-mini"><div class="label">Cilindrata</div><div class="value">1.946 cm³</div></div>
@@ -315,40 +274,81 @@
 
   </div>
 
-  <!-- Designer -->
+  <!-- Designer (desktop: anni dentro al nome, come originale) -->
   <section class="designer">
     <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
-    <div class="designer__titles">
+    <div>
       <div class="designer__label">Designer</div>
-      <div class="designer__name">Giovanni Michelotti</div><span class="designer__years">(1921-1980)</span>
+      <!-- su desktop la riga resta unica; su mobile la spezzatura in 3 righe è gestita da CSS -->
+      <div class="designer__name">Giovanni Michelotti <span class="designer__years">(1921-1980)</span></div>
       <p class="designer__text">Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.</p>
     </div>
   </section>
 
+  <!-- ====== SOLO MOBILE: layout e disposizione (nessun cambio font/color/dimensioni) ====== -->
+  <style>
+    @media (max-width:560px){
+      /* Topstrip: 5 colonne, valore può andare su 2 righe */
+      .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
+      .topstrip .spec{ display:none !important; }
+      .spec-row-mobile{
+        display:grid;
+        grid-template-columns: repeat(5, minmax(0,1fr));
+        gap: 8px;
+        align-items:flex-start;
+      }
+      .spec-mini{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+      .spec-mini .label{
+        font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1;
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+      .spec-mini .value{
+        font-size:12px; font-weight:600; color:var(--beige); line-height:1.1;
+        white-space:normal; display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow:hidden;
+      }
+      .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
+
+      /* Designer: foto a sinistra; a destra 3 righe; testo sotto esteso da sx foto a dx titoli
+         (si modifica SOLO il layout; niente override di font/colore/dimensioni) */
+      .designer{
+        display:grid;
+        grid-template-columns: 80px 1fr;  /* foto | blocco titoli */
+        grid-template-rows: auto auto;    /* riga 1: foto+titoli, riga 2: testo */
+        gap:8px; padding:10px; align-items:start;
+      }
+      .designer__img{ grid-column:1/2; grid-row:1/2; width:80px; height:80px; }
+      .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+
+      /* Titoli in 3 righe: Designer / Giovanni Michelotti / (1921-1980) */
+      .designer__label{ grid-column:2/3; grid-row:1/2; }
+      .designer__name{ grid-column:2/3; grid-row:1/2; }
+      .designer__years{ display:block; } /* manda gli anni a capo sotto il nome mantenendo lo stesso stile del testo */
+
+      /* Usa un contenitore a griglia per i titoli senza cambiare i loro stili */
+      .designer > div{
+        display:grid;
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+        row-gap:2px;
+      }
+
+      /* Paragrafo deve stare sotto e allineato da sx foto a dx titoli (colspan 2) */
+      .designer__text{ grid-column:1/3; grid-row:auto; margin:8px 0 0 0; font-size:14px; }
+    }
+  </style>
+
   <script>
-    /* ====== Drawer / Navbar funzionante ====== */
+    /* ====== Drawer / Navbar: funziona senza cambiare colore ====== */
     (function(){
       const btn = document.getElementById('btnHamburger');
       const drawer = document.getElementById('drawer');
       const backdrop = document.getElementById('drawerBackdrop');
-
-      const open = () => {
-        drawer.classList.add('is-open');
-        drawer.setAttribute('aria-hidden','false');
-        btn.setAttribute('aria-expanded','true');
-      };
-      const close = () => {
-        drawer.classList.remove('is-open');
-        drawer.setAttribute('aria-hidden','true');
-        btn.setAttribute('aria-expanded','false');
-      };
-
-      btn.addEventListener('click', () => drawer.classList.contains('is-open') ? close() : open());
+      function open(){ drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); }
+      function close(){ drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); }
+      btn.addEventListener('click', ()=> drawer.classList.contains('is-open') ? close() : open());
       backdrop.addEventListener('click', close);
-      window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
-
-      // Evita che click all'interno del pannello chiudano il menu
-      document.querySelector('.drawer__panel').addEventListener('click', e => e.stopPropagation());
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+      document.querySelector('.drawer__panel')?.addEventListener('click', e => e.stopPropagation());
     })();
 
     /* ====== Slideshow ====== */
@@ -359,6 +359,7 @@
       const next = document.getElementById('next');
       let i = 0;
       function renderDots(){
+        if(!dotsWrap) return;
         dotsWrap.innerHTML = '';
         slides.forEach((_, idx) => {
           const d = document.createElement('button');
@@ -374,8 +375,8 @@
 
       // Swipe touch
       let x0=null; const el=document.querySelector('.slides');
-      el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
-      el.addEventListener('touchend', e => {
+      el?.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
+      el?.addEventListener('touchend', e => {
         if(x0===null) return;
         const dx = e.changedTouches[0].clientX - x0;
         if(Math.abs(dx)>30) { dx<0 ? go(i+1) : go(i-1); }
