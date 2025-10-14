@@ -43,25 +43,22 @@
     /* ====== Drawer ====== */
     .drawer{ position: fixed; inset:0; display:none; }
     .drawer.is-open{ display:block; }
-    /* CAMBIO 1: backdrop opaca, copre la pagina solo quando il menu è aperto */
-   /* backdrop di default: trasparente */
-.drawer__backdrop{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  background: transparent;
-}
 
-/* quando il menu è aperto: backdrop scura e opaca */
-.drawer.is-open .drawer__backdrop{
-  background: #0a1a2b; /* colore pieno, niente trasparenza */
-}
+    /* CAMBIO: backdrop resta trasparente anche quando il menu è aperto,
+       così la pagina (es. sezione Designer) rimane visibile */
+    .drawer__backdrop{
+      position:absolute; inset:0; z-index:1;
+      background: transparent;
+    }
+    .drawer.is-open .drawer__backdrop{
+      background: transparent; /* <— unico cambio rispetto a prima */
+    }
 
     .drawer__panel{
       position:absolute; left:0; top:0;
       width:min(86vw, 320px);
       height:auto; max-height:100vh; overflow:auto;
-      background:#081424;
+      background:#081424; /* pannello sempre solido */
       border-right:1px solid var(--line);
       box-shadow:8px 0 30px rgba(0,0,0,.4);
       padding:18px;
@@ -156,7 +153,7 @@
     .divider{height:1px;background: linear-gradient(90deg, rgba(200,171,110,0), rgba(200,171,110,.8), rgba(200,171,110,0));margin:10px 0 14px}
     .story-subtitle { font-size: clamp(15px, 2vw, 20px); font-weight: 400; color: var(--beige); margin: 16px 0 8px; line-height: 1.3; }
 
-    /* ====== Designer (DESKTOP invariato) ====== */
+    /* ====== Designer (DESKTOP: come originale) ====== */
     .designer{
       display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; 
       margin-top:var(--gap); padding:14px;
@@ -168,9 +165,8 @@
       margin-left:auto; margin-right:auto;
     }
     .designer__img img{ width:100%; border-radius:12px; }
-    .designer__label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
-    .designer__name{margin:4px 0; font-size:20px; color:var(--beige)}
-
+    .designer__label{font-size:12px; row-gap:1.2em; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+    .designer__name{margin:4px 0;row-gap:1.2em;font:20px;color:var(--beige)} /* include anche gli anni su desktop */
   </style>
 </head>
 <body>
@@ -229,7 +225,7 @@
       <div class="spec"><div class="label">Velocità max</div><div class="value">270 km/h</div></div>
       <div class="spec"><div class="label">Consumo</div><div class="value">15–18 l/100km</div></div>
 
-      <!-- Mobile: 5 colonne compatte -->
+      <!-- Mobile: 5 colonne compatte (mostrate solo su mobile) -->
       <div class="spec-row-mobile" aria-hidden="true">
         <div class="spec-mini"><div class="label">Anno</div><div class="value">1963<br>1965</div></div>
         <div class="spec-mini"><div class="label">Cilindrata</div><div class="value">1.946 cm³</div></div>
@@ -303,7 +299,7 @@
     </div>
   </section>
 
-  <!-- ====== SOLO MOBILE: aggiunto spazio tra "Designer" e "Giovanni Michelotti" ====== -->
+  <!-- SOLO mobile: il layout rimane quello che avevi impostato -->
   <style>
     @media (max-width:560px){
       .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
@@ -319,21 +315,18 @@
       .spec-mini .value{ font-size:12px; font-weight:600; color:var(--beige); line-height:1.1; white-space:normal; display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow:hidden; }
       .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
 
-  /* CAMBIO MOBILE: più spazio tra "Designer" e "Giovanni Michelotti" */
-.designer > div{
-  display:grid;
-  grid-template-columns:1fr;
-  grid-auto-rows:auto;
-  row-gap:10px; /* spazio verticale tra le righe dei titoli */
-}
-
-/* anni su riga nuova, solo mobile */
-.designer__years{ display:block; }
-
-/* il paragrafo sta sotto e occupa tutta la riga sotto foto+titoli */
-.designer__text{ grid-column:1 / -1; }
-
-
+      .designer{
+        display:grid;
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto;
+        gap:8px; padding:10px; align-items:start;
+      }
+      .designer__img{ grid-column:1/2; grid-row:1/2; width:80px; height:80px; }
+      .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+      .designer > div{ display:grid; grid-template-columns: 1fr; grid-auto-rows:auto; row-gap:2px; }
+      .designer__years{ display:block; }
+      .designer__text{ grid-row:auto; margin:auto; font-size:14px; }
+    }
   </style>
 
   <script>
