@@ -96,8 +96,19 @@
       grid-template-columns: 1.2fr repeat(5, 1fr);
       gap: var(--gap);
       align-items:stretch;
+      margin-top: 40px; /* spazio per la chip */
       margin-bottom: var(--gap);
     }
+.story-subtitle {
+  font-size: clamp(15px, 2vw, 20px); /* stesso font-size di h2 */
+  font-weight: 400;                    /* rimuove il grassetto */
+  color: var(--beige);                 /* stesso colore di "Storia" */
+  margin: 16px 0 8px;                 /* spazio sopra e sotto */
+  line-height: 1.3;
+}
+
+ 
+
     @media (max-width: 1100px){
       .topstrip{grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: minmax(84px, auto)}
       .topstrip .name{grid-column: 1 / -1; min-height: 72px}
@@ -273,7 +284,7 @@
     <!-- Gallery -->
     <section class="gallery" aria-label="Galleria immagini">
       <div class="slides" id="slides">
-        <figure class="slide is-active"><img src="disegno Abarth Simca Matita.png" alt="[NOME MACCHINA] – vista 1"></figure>
+        <figure class="slide is-active"><img src="Disegno Abarth Simca Matita.png" alt="[NOME MACCHINA] – vista 1"></figure>
         <figure class="slide"><img src="../assets/img/macchina-2.jpg" alt="[NOME MACCHINA] – vista 2"></figure>
         <figure class="slide"><img src="../assets/img/macchina-3.jpg" alt="[NOME MACCHINA] – vista 3"></figure>
       </div>
@@ -320,33 +331,35 @@
     <section class="story" id="storia">
       <h2>Storia</h2>
       <div class="divider"></div>
-      <p>La Abarth Simca 2000 Tipo 136 è passata alla storia come il “David contro Golia” delle corse: piccola, leggera, velocissima, capace di sfidare giganti con cilindrate doppie o triple. Una macchina che ha scritto una pagina indelebile nella leggenda di Carlo Abarth. Simbolo della collaborazione Abarth–Simca.
+      <p>La Abarth Simca 2000 Tipo 136 è passata alla storia come il “David contro Golia” delle corse: piccola, leggera, velocissima, capace di sfidare giganti con cilindrate doppie o triple. Una macchina che ha scritto una pagina indelebile nella leggenda di Carlo Abarth. Simbolo della collaborazione Abarth–Simca. </p>
 
-Perchè ha fatto la storia: 
 
-Prestazioni da record: con appena 2 litri di cilindrata superava i 270 km/h, rivaleggiando con Ferrari e Porsche più potenti.
+<h3 class="story-subtitle">Perchè ha fatto la storia:</h3>
 
-Rapporto peso/potenza imbattibile: grazie ai soli 600 kg, era agile e letale in gara.
+<p><strong>Prestazioni da record:</strong> con appena 2 litri di cilindrata superava i 270 km/h, rivaleggiando con Ferrari e Porsche più potenti.</p>
 
-Aerodinamica pionieristica: coda tronca (“duck-tail”) e versioni “Longnose” anticipavano soluzioni che sarebbero diventate standard.
+<p><strong>Rapporto peso/potenza imbattibile:</strong> grazie ai soli 600 kg, era agile e letale in gara.</p>
 
-Regina delle cronoscalate: dominava in salita e nei circuiti misti, dove potenza e leggerezza erano decisive.
+<p><strong>Aerodinamica pionieristica:</strong> coda tronca (“duck-tail”) e versioni “Longnose” anticipavano soluzioni che sarebbero diventate standard.</p>
 
-Filosofia Abarth: incarnava l’idea di Carlo Abarth che “non serve un grande motore per vincere, ma un’auto leggera e intelligente”.
+<p><strong>Regina delle cronoscalate:</strong> dominava in salita e nei circuiti misti, dove potenza e leggerezza erano decisive.</p>
 
-Rarità e fascino: prodotta in pochissimi esemplari, oggi è un’icona assoluta nei musei e nelle aste di auto storiche.
-</p>
-    </section>
+<p><strong>Filosofia Abarth:</strong> incarnava l’idea di Carlo Abarth che “non serve un grande motore per vincere, ma un’auto leggera e intelligente”.</p>
+
+<p><strong>Rarità e fascino:</strong> prodotta in pochissimi esemplari, oggi è un’icona assoluta nei musei e nelle aste di auto storiche.</p>
+
+</section>
 
   </div>
 
   <!-- Designer allineato come il resto -->
   <section class="designer">
-    <div class="designer__img"><img src="../assets/img/designer-carlo-abarth.jpg" alt="Carlo Abarth" /></div>
+    <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
     <div>
       <div class="designer__label">Designer</div>
-      <div class="designer__name">Carlo Abarth</div>
-      <p>Fondatore e anima del marchio, promotore della filosofia “leggero è meglio”: motori compatti, pesi piuma e aerodinamica furba per battere avversari più potenti.</p>
+      <div class="designer__name">Giovanni Michelotti (1921-1980)</div>
+      <p>Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.
+      </p>
     </div>
   </section>
 
