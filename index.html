@@ -33,6 +33,12 @@
       backdrop-filter: blur(6px);
       background: linear-gradient(180deg, rgba(10,20,30,.75), rgba(10,20,30,.35));
       border-bottom: 1px solid var(--line);
+      transition: background .2s ease;
+    }
+    /* SOLID quando il menu è aperto */
+    .navbar.is-solid{
+      backdrop-filter: none;
+      background: #0a141e; /* colore pieno */
     }
     .nav-inner{
       max-width: var(--maxw);
@@ -60,26 +66,28 @@
     .drawer.is-open{ display:block; }
     .drawer__backdrop{ 
       position:absolute; inset:0; 
-      background: rgba(0,0,0,.65); /* Darker background to hide content */
+      background: rgba(0,0,0,.65);
+      z-index: 1;
     }
     .drawer__panel{
       position:absolute; top:0; left:0; height:100%; width:min(86vw, 320px);
-      background: #081424; /* Darker panel background for better contrast */
+      background: #081424;
       border-right: 1px solid var(--line);
       box-shadow: 8px 0 30px rgba(0,0,0,.4);
       padding: 18px;
       display:flex; flex-direction:column; gap:12px;
+      z-index: 2; /* sopra al backdrop: tutti i link sono cliccabili */
     }
     .drawer a{
       color: var(--ink); 
       text-decoration: none; 
       padding: 12px 6px;
       border-radius:8px;
-      font-size: 16px; /* Increased for readability */
+      font-size: 16px;
       transition: background .2s ease;
     }
     .drawer a:hover{ 
-      background: rgba(255,255,255,.12); /* Lighter hover effect for contrast */
+      background: rgba(255,255,255,.12);
     }
 
     /* ====== Pagina ====== */
@@ -122,6 +130,7 @@
       .topstrip .name{grid-column: 1 / -1; min-height: 72px}
     }
     @media (max-width: 560px){
+      /* === SOLO MOBILE: rimuovi i 5 box e mostra info in UNA sola riga === */
       .topstrip{
         grid-template-columns: 1fr;
         gap: 6px;
@@ -134,39 +143,26 @@
       .name__value{
         font-size: clamp(22px, 5.5vw, 26px);
       }
-      .spec{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border: none;
-        background: none;
-        box-shadow: none;
-        padding: 4px 6px;
-        min-height: auto;
-      }
-      .topstrip > .spec{
-        flex: 1;
-        text-align: center;
-      }
-      .topstrip:not(.name){
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-      }
-      .spec .label{
-        font-size: 10px;
-        margin-bottom: 2px;
-        color: var(--muted);
-      }
-      .spec .value{
-        font-size: clamp(12px, 3vw, 14px);
-        font-weight: 500;
+      /* nascondi i box */
+      .topstrip .spec{ display:none !important; }
+      /* riga unica con tutte le info */
+      .topstrip-info-mobile{
+        display:block;
+        font-size: 13px;
         color: var(--beige);
+        border:1px solid var(--line);
+        border-radius: var(--radius-s);
+        padding: 8px 10px;
+        background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+        box-shadow: var(--shadow);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
     .name{display:flex; align-items:flex-end; padding: 10px 0;}
-    .name__label{font-size: 12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-right:10px;}
+    .name__label{font-size: 12px; letter-spacing:.14em; text-transform:uppercase; color: var(--muted); margin-right:10px;}
     .name__value{font-size: clamp(28px, 4.2vw, 40px); font-weight:600; letter-spacing:.015em; line-height:1.1; color:var(--beige);}
 
     .spec{
@@ -294,12 +290,14 @@
     .designer__label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
     .designer__name{margin:4px 0;font-size:20px;color:var(--beige)}
     @media (max-width: 560px){
+      /* SOLO MOBILE: immagine a sinistra allineata al titolo, testo sotto, allineato dal bordo sinistro dell'immagine fino alla fine del titolo */
       .designer{
         display: grid;
         grid-template-columns: 80px 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto;
         gap: 8px;
         padding: 10px;
+        align-items: start;
       }
       .designer__img{
         grid-column: 1 / 2;
@@ -320,7 +318,7 @@
         justify-content: flex-start;
       }
       .designer p{
-        grid-column: 1 / -1;
+        grid-column: 1 / -1;   /* il paragrafo va sotto immagine + titolo */
         grid-row: 2 / 3;
         margin: 8px 0 0 0;
         font-size: 14px;
@@ -331,7 +329,7 @@
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar" aria-label="Barra di navigazione">
+  <nav class="navbar" aria-label="Barra di navigazione" id="navbar">
     <div class="nav-inner">
       <button class="hamburger" id="btnHamburger" aria-label="Apri menu" aria-controls="drawer" aria-expanded="false">
         <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -345,15 +343,15 @@
     <div class="drawer__backdrop" id="drawerBackdrop"></div>
     <div class="drawer__panel">
       <a href="../index.html">Home</a>
-      <a href="abarthsimca.html"> Abarth Simca</a>
+      <a href="abarthsimca.html">Abarth Simca</a>
       <a href="alfaromeogiuliatisuper.html">Alfa Romeo Giulia TI Super</a>
       <a href="cadillacfletwood.html">Cadillac Fletwood</a>
       <a href="fiat500l.html">Fiat 500 l</a>
-      <a href="fiat500abarth.html">Fiat 500 Abarth </a>
+      <a href="fiat500abarth.html">Fiat 500 Abarth</a>
       <a href="golfgti.html">Golf GTI</a>
       <a href="mercedes350sl.html">Mercedes 350 SL</a>
       <a href="mercedes600sl.html">Mercedes 600 SL</a>
-      <a href="rollsroyce">Rolls Royce</a>
+      <a href="rollsroyce.html">Rolls Royce</a>
     </div>
   </aside>
 
@@ -382,6 +380,11 @@
       <div class="spec"><div class="label">Potenza</div><div class="value">200 CV a 7.200 giri/min</div></div>
       <div class="spec"><div class="label">Velocità max</div><div class="value">270 km/h</div></div>
       <div class="spec"><div class="label">Consumo</div><div class="value">15-18 l/100km</div></div>
+
+      <!-- SOLO MOBILE: tutte le info in una riga -->
+      <div class="topstrip-info-mobile" aria-hidden="true">
+        1963–1965 • 1.946 cm³ • 200 CV a 7.200 giri/min • 270 km/h • 15–18 l/100km
+      </div>
     </section>
 
     <!-- Gallery -->
@@ -412,7 +415,7 @@
         <span>Ascolta la storia (Audio)</span>
       </a>
 
-      <!-- 3) Revisione: "tra" + giorni colorati + scadenza -->
+      <!-- 3) Revisione -->
       <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
         <div class="title">Revisione in:</div>
         <div class="big">
@@ -422,7 +425,7 @@
         <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
       </div>
 
-      <!-- 4) Assicurazione: solo testo Sì/No colorato + scadenza -->
+      <!-- 4) Assicurazione -->
       <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-31">
         <div class="title">Assicurazione</div>
         <div class="big"><span id="ins-text">—</span></div>
@@ -453,7 +456,7 @@
 
   </div>
 
-  <!-- Designer allineato come il resto -->
+  <!-- Designer -->
   <section class="designer">
     <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
     <div>
@@ -470,8 +473,19 @@
       const btn = document.getElementById('btnHamburger');
       const drawer = document.getElementById('drawer');
       const backdrop = document.getElementById('drawerBackdrop');
-      function open(){ drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); }
-      function close(){ drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); }
+      const navbar = document.getElementById('navbar');
+      function open(){
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden','false');
+        btn.setAttribute('aria-expanded','true');
+        navbar.classList.add('is-solid'); // navbar a colore pieno quando il menu è aperto
+      }
+      function close(){
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+        navbar.classList.remove('is-solid'); // torna trasparente quando si chiude
+      }
       btn.addEventListener('click', ()=> drawer.classList.contains('is-open') ? close() : open());
       backdrop.addEventListener('click', close);
       window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
@@ -522,7 +536,7 @@
       return Math.max(0, Math.ceil((target - today)/MS));
     }
 
-    /* ====== Revisione: colore dinamico (0–30 rosso, 31–60 arancio, >60 verde) ====== */
+    /* ====== Revisione ====== */
     (function(){
       const box=document.getElementById('box-revisione');
       if(!box) return;
@@ -534,7 +548,6 @@
       const daysEl=document.getElementById('rev-days');
       daysEl.textContent=days;
 
-      // classi colore (anche con glow)
       if(days <= 30) { daysEl.classList.add('state-bad'); }
       else if(days <= 60) { daysEl.classList.add('state-warn'); }
       else { daysEl.classList.add('state-good'); }
@@ -542,7 +555,7 @@
       document.getElementById('rev-deadline').textContent='scadenza: '+fmtIT(deadline);
     })();
 
-    /* ====== Assicurazione: Sì/No automatico + stesso colore delle classi sopra ====== */
+    /* ====== Assicurazione ====== */
     (function(){
       const box=document.getElementById('box-assicurazione');
       if(!box) return;
@@ -554,7 +567,6 @@
 
       if(today0 < deadline){
         txt.textContent='Sì';
-        // se mancano <=30 giorni alla scadenza, arancione/rosso come alert
         const days=daysBetween(today0, deadline);
         if(days <= 30) txt.classList.add('state-warn');
         else txt.classList.add('state-good');
