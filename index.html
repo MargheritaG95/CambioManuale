@@ -47,7 +47,8 @@
     .drawer__panel{
       position:absolute; top:0; left:0; height:100%; width:min(86vw, 320px);
       background:#081424; border-right:1px solid var(--line);
-      box-shadow:8px 0 30px rgba(0,0,0,.4); padding:18px; display:flex; flex-direction:column; gap:12px; z-index:2;
+      box-shadow:8px 0 30px rgba(0,0,0,.4); padding:18px;
+      display:flex; flex-direction:column; gap:12px; z-index:2;
     }
     .drawer a{ color:var(--ink); text-decoration:none; padding:12px 6px; border-radius:8px; font-size:16px; transition: background .2s ease; }
     .drawer a:hover{ background: rgba(255,255,255,.12); }
@@ -87,33 +88,8 @@
     .spec .label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
     .spec .value{font-size: clamp(18px,2.6vw,22px); font-weight:600; color:var(--beige)}
 
-    /* ====== SOLO MOBILE: riga info compatta ====== */
+    /* ====== BLOCCO MOBILE NASCOSTO DI DEFAULT ====== */
     .spec-row-mobile{ display:none; }
-
-    @media (max-width:560px){
-      .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
-      .topstrip .spec{ display:none !important; } /* nascondi box desktop su mobile */
-
-      /* 5 colonne: titolo sopra, valore sotto; il valore può occupare 2 righe */
-      .spec-row-mobile{
-        display:grid;
-        grid-template-columns: repeat(5, minmax(0,1fr));
-        gap: 8px;
-        align-items:flex-start;
-      }
-      .spec-mini{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-      .spec-mini .label{
-        font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1;
-        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      }
-      .spec-mini .value{
-        font-size:12px; font-weight:600; color:var(--beige); line-height:1.1;
-        white-space:normal;                 /* consenti 2 righe */
-        display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
-        overflow:hidden;
-      }
-      .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
-    }
 
     /* ====== Gallery ====== */
     .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
@@ -161,12 +137,11 @@
     .story h2{margin: 0 0 8px 0;font-size: clamp(20px,2.8vw,26px);color: var(--beige)}
     .story p{margin:10px 0;line-height:1.6;color: var(--ink)}
     .divider{height:1px;background: linear-gradient(90deg, rgba(200,171,110,0), rgba(200,171,110,.8), rgba(200,171,110,0));margin:10px 0 14px}
-    /* RIMESSO: stile del sottotitolo “Perchè ha fatto la storia” come in origine */
     .story-subtitle { font-size: clamp(15px, 2vw, 20px); font-weight: 400; color: var(--beige); margin: 16px 0 8px; line-height: 1.3; }
 
-    /* ====== Designer (DESKTOP: originale, invariato) ====== */
+    /* ====== Designer (DESKTOP invariato) ====== */
     .designer{
-      display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; 
+      display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center;
       margin-top:var(--gap); padding:14px;
       border:1px solid var(--line); border-radius: var(--radius-s);
       background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
@@ -177,33 +152,53 @@
     .designer__img img{ width:100%; border-radius:12px; }
     .designer__label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
     .designer__name{margin:4px 0;font-size:20px;color:var(--beige)}
-    /* anni separati ma inline su desktop per sembrare il testo originale */
     .designer__years{ display:inline; margin-left:6px; color:var(--muted); font-size:16px; }
 
-    /* ====== SOLO MOBILE: Designer layout richiesto ====== */
+    /* ====== SOLO MOBILE ====== */
     @media (max-width:560px){
+      /* Topstrip mobile */
+      .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
+      .topstrip .spec{ display:none !important; } /* nascondi i box desktop */
+      .spec-row-mobile{
+        display:grid;
+        grid-template-columns: repeat(5, minmax(0,1fr));
+        gap: 8px;
+        align-items:flex-start;
+      }
+      .spec-mini{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+      .spec-mini .label{
+        font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1;
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+      .spec-mini .value{
+        font-size:12px; font-weight:600; color:var(--beige); line-height:1.1;
+        white-space:normal; display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow:hidden;
+      }
+      .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
+
+      /* Designer mobile:
+         riga 1 = foto (col1) + titoli (col2);
+         riga 2 = paragrafo allineato da sx foto a dx titoli (col1 -> col2) */
       .designer{
         display:grid;
-        grid-template-columns: 80px 1fr;  /* col1: foto | col2: titoli (3 righe) */
-        grid-template-rows: auto auto;    /* r1: foto+titoli, r2: paragrafo */
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto;
         gap:8px; padding:10px; align-items:start;
       }
       .designer__img{ grid-column:1/2; grid-row:1/2; width:80px; height:80px; }
       .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
-      /* blocco titoli a 3 righe a destra della foto */
       .designer__titles{ grid-column:2/3; grid-row:1/2; display:grid; grid-template-rows:auto auto auto; row-gap:2px; min-width:0; }
       .designer__label{ font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
       .designer__name{ font-size:18px; color:var(--beige); margin:0; display:block; }
       .designer__years{ display:block; margin:0; font-size:14px; color:var(--muted); }
-      /* paragrafo sotto (sotto foto e titoli), allineato a tutta larghezza */
-      .designer p{ grid-column:1/-1; grid-row:2/3; margin:8px 0 0 0; font-size:14px; }
+      .designer__text{ grid-column:1/3; grid-row:2/3; margin:8px 0 0 0; font-size:14px; } /* sotto e allineato ai bordi di foto+titoli */
     }
   </style>
 </head>
 <body>
 
   <!-- NAVBAR -->
-  <nav class="navbar" aria-label="Barra di navigazione" id="navbar">
+  <nav class="navbar" aria-label="Barra di navigazione">
     <div class="nav-inner">
       <button class="hamburger" id="btnHamburger" aria-label="Apri menu" aria-controls="drawer" aria-expanded="false">
         <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -320,27 +315,40 @@
 
   </div>
 
-  <!-- Designer (desktop identico, con anni separati per il mobile) -->
+  <!-- Designer -->
   <section class="designer">
     <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
     <div class="designer__titles">
       <div class="designer__label">Designer</div>
       <div class="designer__name">Giovanni Michelotti</div><span class="designer__years">(1921-1980)</span>
-      <p>Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.</p>
+      <p class="designer__text">Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.</p>
     </div>
   </section>
 
   <script>
-    /* ====== Drawer ====== */
+    /* ====== Drawer / Navbar funzionante ====== */
     (function(){
       const btn = document.getElementById('btnHamburger');
       const drawer = document.getElementById('drawer');
       const backdrop = document.getElementById('drawerBackdrop');
-      function open(){ drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden','false'); btn.setAttribute('aria-expanded','true'); }
-      function close(){ drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden','true'); btn.setAttribute('aria-expanded','false'); }
-      btn.addEventListener('click', ()=> drawer.classList.contains('is-open') ? close() : open());
+
+      const open = () => {
+        drawer.classList.add('is-open');
+        drawer.setAttribute('aria-hidden','false');
+        btn.setAttribute('aria-expanded','true');
+      };
+      const close = () => {
+        drawer.classList.remove('is-open');
+        drawer.setAttribute('aria-hidden','true');
+        btn.setAttribute('aria-expanded','false');
+      };
+
+      btn.addEventListener('click', () => drawer.classList.contains('is-open') ? close() : open());
       backdrop.addEventListener('click', close);
-      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+      window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') close(); });
+
+      // Evita che click all'interno del pannello chiudano il menu
+      document.querySelector('.drawer__panel').addEventListener('click', e => e.stopPropagation());
     })();
 
     /* ====== Slideshow ====== */
@@ -351,7 +359,6 @@
       const next = document.getElementById('next');
       let i = 0;
       function renderDots(){
-        if(!dotsWrap) return;
         dotsWrap.innerHTML = '';
         slides.forEach((_, idx) => {
           const d = document.createElement('button');
@@ -366,9 +373,9 @@
       prev?.addEventListener('click',()=>go(i-1));
 
       // Swipe touch
-      const el=document.querySelector('.slides'); let x0=null;
-      el?.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
-      el?.addEventListener('touchend', e => {
+      let x0=null; const el=document.querySelector('.slides');
+      el.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
+      el.addEventListener('touchend', e => {
         if(x0===null) return;
         const dx = e.changedTouches[0].clientX - x0;
         if(Math.abs(dx)>30) { dx<0 ? go(i+1) : go(i-1); }
