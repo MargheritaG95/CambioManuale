@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abarth Simca 2000 Tipo 136 - 1965 – Scheda</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --blue-deep:#0a1a2b; --blue-deep-2:#0f253b; --beige:#d9c7a6; --ink:#eae7e1; --muted:#b9c3cf;
+      --line:#22364c; --shadow:0 14px 40px rgba(0,0,0,.35); --radius:16px; --radius-s:12px;
+      --gold:#c8ab6e; --focus:#f5d79a; --gap:clamp(10px,1.8vw,16px); --maxw:1200px;
+      --green:#5AD07A; --orange:#FFA94D; --red:#FF6B6B;
+    }
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--blue-deep) 0%, var(--blue-deep-2) 100%);color:var(--ink);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
+    *,*:before,*:after{box-sizing:border-box}
+
+    /* ====== Navbar ====== */
+    .navbar{
+      position: sticky; top:0; z-index:1000;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(10,20,30,.75), rgba(10,20,30,.35));
+      border-bottom: 1px solid var(--line);
+      overflow: visible; /* serve per mostrare la tendina */
+    }
+    .nav-inner{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display:flex; align-items:center; gap:12px;
+      position: relative;
+    }
+    .hamburger{
+      width:42px; height:42px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(10,20,30,.35);
+      display:grid; place-items:center; cursor:pointer;
+      transition: border-color .2s ease, transform .12s ease;
+    }
+    .hamburger:hover{ border-color: rgba(255,255,255,.4) }
+    .hamburger:focus-visible{ outline:2px solid var(--focus); outline-offset:3px }
+    .hamburger svg{ width:22px; height:22px; stroke: var(--ink); fill:none; stroke-width:2.2 }
+    .brand-title{ font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+
+    /* ====== Dropdown (nuovo menu a tendina orizzontale) ====== */
+    .nav-dropdown{
+      position: absolute;
+      left:0; right:0; top:100%;
+      background:#0b1726;
+      border-bottom:1px solid var(--line);
+      box-shadow: var(--shadow);
+      max-height:0; overflow:hidden;
+      transition: max-height .28s ease;
+    }
+    .navbar.is-open .nav-dropdown{ max-height: 240px; }
+    .nav-dropdown__inner{
+      max-width: var(--maxw);
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex; gap:12px; align-items:center; flex-wrap: wrap;
+    }
+    .nav-dropdown a{
+      color:var(--ink); text-decoration:none;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      transition: transform .12s ease, border-color .2s ease, background .3s ease;
+      white-space:nowrap;
+      font-size:15px;
+    }
+    .nav-dropdown a:hover{ border-color: rgba(255,255,255,.28) }
+    .nav-dropdown a:active{ transform: translateY(1px) }
+/* --- MENU: layout mobile 3 per riga --- */
+@media (max-width:560px){
+  /* più spazio alla tendina quando aperta su mobile */
+  .navbar.is-open .nav-dropdown{ max-height: 70vh; }
+
+  .nav-dropdown__inner{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 per riga */
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .nav-dropdown a{
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   /* se un titolo è lungo */
+  }
+}
+    /* Pagina */
+    .page{max-width:var(--maxw);margin:0 auto;padding: 18px 16px; position: relative;}
+
+    /* CHIP */
+    .chip{ position:absolute; top:5px; right:16px; display:inline-flex; align-items:center; gap:6px;
+      padding:4px 10px; border-radius:999px; border:1px solid rgba(200,171,110,.55);
+      background: radial-gradient(380px 90px at 50% 0%, rgba(255,255,255,.1), rgba(255,255,255,0)); box-shadow:var(--shadow); white-space:nowrap; }
+    .chip svg{ width:14px; height:14px; stroke: var(--gold); fill:none; stroke-width:1.8 }
+    .chip-year{ color:var(--beige); font-weight:700; }
+
+    /* ====== Topstrip ====== */
+    .topstrip{
+      display:grid;
+      grid-template-columns: 1.2fr repeat(5, 1fr);
+      gap: var(--gap);
+      align-items:stretch;
+      margin-top: 35px;
+      margin-bottom: var(--gap);
+    }
+    .name{display:flex; align-items:flex-end; padding: 10px 0;}
+    .name__label{font-size: 12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-right:10px;}
+    .name__value{font-size: clamp(28px, 4.2vw, 40px); font-weight:600; letter-spacing:.015em; line-height:1.1; color:var(--beige);}
+
+    .spec{
+      background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius-s);
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column; justify-content:center;
+      min-height: 55px;
+    }
+    .spec .label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+    .spec .value{font-size: clamp(18px,2.6vw,22px); font-weight:600; color:var(--beige)}
+
+    /* BLOCCO MOBILE (nascosto su desktop/tablet) */
+    .spec-row-mobile{ display:none; }
+
+    /* ====== Gallery ====== */
+    .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .slides{position:relative;width:100%;aspect-ratio: 16/9;overflow:hidden}
+    .slide{position:absolute;inset:0;opacity:0;transform: scale(1.02);transition: opacity .5s ease, transform .6s ease;display:grid;place-items:center;background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));}
+    .slide.is-active{opacity:1;transform: scale(1)}
+    .slide img{width:100%;height:100%;object-fit:cover;display:block;filter: saturate(0.95) contrast(1.02);}
+    .nav{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+    .arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background: rgba(10,20,30,.35);backdrop-filter: blur(6px);display:grid;place-items:center;opacity:0;transition: opacity .25s ease, transform .2s ease, border-color .2s ease;transform: translateY(2px)}
+    .gallery:hover .arrow, .arrow:focus-visible{opacity:.9; transform:none}
+    .arrow:hover{border-color:rgba(255,255,255,.4)}
+    .arrow svg{width:20px;height:20px;fill:none;stroke: var(--ink);stroke-width:2.2}
+    .arrow:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+    .nav-left{margin-left:10px}
+    .nav-right{margin-right:10px}
+    .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center}
+    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:1px solid rgba(0,0,0,.25);box-shadow:0 1px 0 rgba(0,0,0,.25);transition: transform .15s ease, background .2s ease}
+    .dot.is-active{background: var(--gold); transform: scale(1.2)}
+
+    /* ====== Azioni / Info ====== */
+    .actions{ display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: var(--gap) 0; max-width: var(--maxw); align-items:stretch; }
+    @media (max-width:1000px){ .actions{ grid-template-columns:1fr 1fr } }
+    @media (max-width:560px){
+      .actions{ grid-template-columns:1fr 1fr; gap:8px; margin:8px 0; }
+      .action, .infobox{ min-height:64px; padding:8px 10px; font-size:14px; }
+      .infobox .big{ font-size: clamp(16px, 4vw, 18px); }
+      .infobox .title{ font-size:11px; margin-bottom:4px; }
+      .infobox .sub{ font-size:11px; }
+    }
+    .action{ display:flex; gap:10px; align-items:center; justify-content:center; background: radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,.08), rgba(255,255,255,0)); border:1px solid var(--line); border-radius: var(--radius-s); padding:14px 16px; text-decoration:none; color:var(--ink); box-shadow:var(--shadow); transition: transform .15s ease, border-color .2s ease, background .3s ease; min-height:84px; text-align:center; }
+    .action:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.28) }
+    .action svg{ width:20px; height:20px; stroke: var(--beige); stroke-width:2; fill:none }
+
+    .infobox{ background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border:1px solid var(--line); border-radius: var(--radius-s); padding:12px 14px; box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:84px; text-align:center; }
+    .infobox .title{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+    .infobox .big{font-size: clamp(20px,3vw,26px); font-weight:700; color: var(--beige); line-height:1.1; display:flex; gap:8px; align-items: baseline; justify-content:center;}
+    .infobox .small{font-size: 12px; color: var(--muted)}
+    .infobox .sub{margin-top:4px; font-size: 12px; color: var(--muted);}
+    .state-good{ color: var(--green); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(90,208,122,.25); }
+    .state-warn{ color: var(--orange); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(255,169,77,.22); }
+    .state-bad { color: var(--red);   text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(255,107,107,.22); }
+
+    /* ====== Storia ====== */
+    .story{margin-top: 4px;background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius: var(--radius);padding: clamp(16px,2vw,22px);box-shadow: var(--shadow)}
+    .story h2{margin: 0 0 8px 0;font-size: clamp(20px,2.8vw,26px);color: var(--beige)}
+    .story p{margin:10px 0;line-height:1.6;color: var(--ink)}
+    .divider{height:1px;background: linear-gradient(90deg, rgba(200,171,110,0), rgba(200,171,110,.8), rgba(200,171,110,0));margin:10px 0 14px}
+    .story-subtitle { font-size: clamp(15px, 2vw, 20px); font-weight: 400; color: var(--beige); margin: 16px 0 8px; line-height: 1.3; }
+
+    /* ====== Designer (DESKTOP: come originale) ====== */
+    .designer{
+      display:grid; grid-template-columns:160px 1fr; gap:16px; align-items:center; 
+      margin-top:var(--gap); padding:14px;
+      row-gap:1.2em;
+      border:1px solid var(--line); border-radius: var(--radius-s);
+      background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      max-width: var(--maxw);
+      margin-left:auto; margin-right:auto;
+    }
+    .designer__img img{ width:100%; border-radius:12px; }
+    .designer__label{font-size:12px; row-gap:1.2em; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+    .designer__name{margin:4px 0;row-gap:1.2em;font:20px;color:var(--beige)} /* include anche gli anni su desktop */
+
+    /* SOLO mobile */
+    @media (max-width:560px){
+      .topstrip{ grid-template-columns: 1fr; gap: 6px; margin-top: 24px; margin-bottom: 6px; }
+      .topstrip .spec{ display:none !important; }
+      .spec-row-mobile{
+        display:grid;
+        grid-template-columns: repeat(5, minmax(0,1fr));
+        gap: 8px;
+        align-items:flex-start;
+      }
+      .spec-mini{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+      .spec-mini .label{ font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .spec-mini .value{ font-size:12px; font-weight:600; color:var(--beige); line-height:1.1; white-space:normal; display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow:hidden; }
+      .name__value{ font-size: clamp(22px, 5.5vw, 26px); }
+
+      .designer{
+        display:grid;
+        grid-template-columns: 80px 1fr;
+        grid-template-rows: auto auto;
+        gap:8px; padding:10px; align-items:start;
+      }
+      .designer__img{ grid-column:1/2; grid-row:1/2; width:80px; height:80px; }
+      .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
+      .designer > div{ display:grid; grid-template-columns: 1fr; grid-auto-rows:auto; row-gap:2px; }
+      .designer__years{ display:block; }
+      .designer__text{ grid-row:auto; margin:auto; font-size:14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" aria-label="Barra di navigazione" id="navbar">
+    <div class="nav-inner">
+      <button class="hamburger" id="btnHamburger" aria-label="Apri menu" aria-controls="menuDropdown" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="brand-title">Menu</div>
+
+      <!-- DROPDOWN (nuovo) -->
+      <div class="nav-dropdown" id="menuDropdown">
+        <div class="nav-dropdown__inner">
+          <a href="../index.html">Home</a>
+          <a href="abarthsimca.html">Abarth Simca</a>
+          <a href="alfaromeogiuliatisuper.html">Alfa Romeo Giulia TI Super</a>
+          <a href="cadillacfletwood.html">Cadillac Fletwood</a>
+          <a href="fiat500l.html">Fiat 500 l</a>
+          <a href="fiat500abarth.html">Fiat 500 Abarth</a>
+          <a href="golfgti.html">Golf GTI</a>
+          <a href="mercedes350sl.html">Mercedes 350 SL</a>
+          <a href="mercedes600sl.html">Mercedes 600 SL</a>
+          <a href="rollsroyce.html">Rolls Royce</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- (RIMOSSO il vecchio ASIDE .drawer) -->
+
+  <div class="page">
+
+    <!-- CHIP -->
+    <span class="chip" aria-label="Anno modello">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+        <path d="M8 11h8"/><path d="M8 15h6"/>
+      </svg>
+      <span class="chip-year">1965</span>
+    </span>
+
+    <!-- Topstrip -->
+    <section class="topstrip" aria-label="Intestazione macchina">
+      <div class="name">
+        <div>
+          <div class="name__label">Nome Macchina</div>
+          <div class="name__value">Alfa Romeo Giulia TI Super</div>
+        </div>
+      </div>
+
+      <!-- Desktop/Tablet: box originali -->
+      <div class="spec"><div class="label">Anno di Produzione</div><div class="value">1963-1964</div></div>
+      <div class="spec"><div class="label">Cilindrata</div><div class="value">1.570 cm³</div></div>
+      <div class="spec"><div class="label">Potenza</div><div class="value">112 CV a 6.500 giri/min</div></div>
+      <div class="spec"><div class="label">Velocità max</div><div class="value">190 km/h</div></div>
+      <div class="spec"><div class="label">Consumo</div><div class="value">10–11 l/100km</div></div>
+
+      <!-- Mobile: 5 colonne compatte (mostrate solo su mobile) -->
+      <div class="spec-row-mobile" aria-hidden="true">
+        <div class="spec-mini"><div class="label">Anno</div><div class="value">1963-<br>1964</div></div>
+        <div class="spec-mini"><div class="label">Cilindrata</div><div class="value">1.570 cm³</div></div>
+        <div class="spec-mini"><div class="label">Potenza</div><div class="value">112 CV</div></div>
+        <div class="spec-mini"><div class="label">Velocità max</div><div class="value">190 km/h</div></div>
+        <div class="spec-mini"><div class="label">Consumo</div><div class="value">10–11 l/100km</div></div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" aria-label="Galleria immagini">
+      <div class="slides" id="slides">
+        <figure class="slide is-active"><img src="giuliati.jpg" alt="[NOME MACCHINA] – vista 1"></figure>
+        <figure class="slide"><img src="giuliacorsa3.jpg" alt="[NOME MACCHINA] – vista 2"></figure>
+        <figure class="slide"><img src="giuliatest.jpg" alt="[NOME MACCHINA] – vista 3"></figure>
+        <figure class="slide"><img src="disegnogiulia.jpg" alt="[NOME MACCHINA] – vista 4"></figure>
+        <figure class="slide"><img src="modellogiulia.jpg" alt="[NOME MACCHINA] – vista 5"></figure>
+         <figure class="slide"><img src="motorecambio.jpg" alt="[NOME MACCHINA] – vista 5"></figure>
+        <figure class="slide"><img src="motoredistribuzione.jpg" alt="[NOME MACCHINA] – vista 5"></figure>
+        <figure class="slide"><img src="presentazionemonza.jpg" alt="[NOME MACCHINA] – vista 5"></figure>
+        <figure class="slide"><img src="squadracorse.jpg" alt="[NOME MACCHINA] – vista 5"></figure>
+      </div>
+      <div class="nav" aria-hidden="true">
+        <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
+        <button class="arrow nav-right" id="next" aria-label="Immagine successiva"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </section>
+
+    <!-- Azioni + Info -->
+    <section class="actions" aria-label="Azioni e stato documenti">
+      <a class="action" href="Istruzioniprovabarth.png" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/><path d="M8 14h8"/><path d="M8 18h6"/></svg>
+        <span>Istruzioni d’uso (PDF)</span>
+      </a>
+      <a class="action" href="../assets/audio/storia.mp3">
+        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span>Ascolta la storia (Audio)</span>
+      </a>
+      <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
+        <div class="title">Revisione in:</div>
+        <div class="big"><span id="rev-days">--</span><span class="small">giorni</span></div>
+        <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
+      </div>
+      <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-31">
+        <div class="title">Assicurazione</div>
+        <div class="big"><span id="ins-text">—</span></div>
+        <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
+      </div>
+    </section>
+
+    <!-- Storia -->
+    <section class="story" id="storia">
+      <h2>Storia</h2>
+      <div class="divider"></div>
+      <p>La Alfa Romeo Giulia TI Super 1964 è una delle Alfa più leggendarie: una berlina nata per correre, prodotta in soli 501 esemplari per l’omologazione, con prestazioni da vera sportiva. È considerata la “madre” delle future sportive derivate dalla Giulia e un pezzo da collezione di altissimo valore.</p>
+
+      <h3 class="story-subtitle"> <strong>Perchè ha fatto la storia:</strong></h3>
+
+      <p><strong>Omologazione da corsa:</strong> costruita apposta per competere nelle categorie Turismo FIA.</p>
+      <p><strong>Produzione limitata:</strong> solo 501 esemplari, oggi rarissimi.</p>
+      <p><strong>Leggerezza:</strong> eliminazione cromature, sedili da corsa, carrozzeria alleggerita.</p>
+      <p><strong>Prestazioni:</strong>  una berlina capace di tenere testa a sportive pure dell’epoca.</p>
+      <p><strong>Innovazione Tecnica:</strong> una delle prime berline con freni a disco su tutte le ruote.</p>
+      <p><strong>Icona Alfa Romeo:</strong>univa eleganza da berlina e anima da competizione, diventando mito tra appassionati e collezionisti.</p>
+    </section>
+
+  </div>
+
+  <!-- Designer -->
+  <section class="designer">
+    <div class="designer__img"><img src="OrazioSattaPuliga.jpg" alt="Orazio Satta Puliga" /></div>
+    <div>
+      <div class="designer__label">Designer</div>
+      <div class="designer__name">Orazio Satta Puliga <span class="designer__years">(1910-1974)</span></div>
+      <p class="designer__text">È stato un importante designer automobilistico italiano, noto per il suo lavoro con Alfa Romeo. Ha contribuito a creare alcuni dei modelli più iconici del marchio, combinando eleganza e prestazioni in un design senza tempo.</p>
+    </div>
+  </section>
+
+  <script>
+    /* Dropdown open/close */
+    (function(){
+      const navbar = document.getElementById('navbar');
+      const btn = document.getElementById('btnHamburger');
+      const dropdown = document.getElementById('menuDropdown');
+
+      function open(){
+        navbar.classList.add('is-open');
+        btn.setAttribute('aria-expanded','true');
+      }
+      function close(){
+        navbar.classList.remove('is-open');
+        btn.setAttribute('aria-expanded','false');
+      }
+      function toggle(){
+        navbar.classList.contains('is-open') ? close() : open();
+      }
+
+      btn.addEventListener('click', toggle);
+
+      // chiudi con ESC
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+      // chiudi cliccando fuori
+      document.addEventListener('click', (e)=>{
+        if (!navbar.classList.contains('is-open')) return;
+        const isInside = navbar.contains(e.target);
+        if (!isInside) close();
+      });
+
+      // previeni chiusura quando si clicca dentro
+      dropdown.addEventListener('click', (e)=> e.stopPropagation());
+    })();
+
+    /* Slideshow */
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const dotsWrap = document.getElementById('dots');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      let i = 0;
+      function renderDots(){
+        if(!dotsWrap) return;
+        dotsWrap.innerHTML = '';
+        slides.forEach((_, idx) => {
+          const d = document.createElement('button');
+          d.className = 'dot' + (idx === i ? ' is-active' : '');
+          d.addEventListener('click', () => go(idx));
+          dotsWrap.appendChild(d);
+        });
+      }
+      function go(n){slides[i].classList.remove('is-active');i=(n+slides.length)%slides.length;slides[i].classList.add('is-active');renderDots();}
+      renderDots();
+      next?.addEventListener('click',()=>go(i+1));
+      prev?.addEventListener('click',()=>go(i-1));
+
+      // Swipe touch
+      let x0=null; const el=document.querySelector('.slides');
+      el?.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
+      el?.addEventListener('touchend', e => {
+        if(x0===null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if(Math.abs(dx)>30) { dx<0 ? go(i+1) : go(i-1); }
+        x0=null;
+      }, {passive:true});
+    })();
+
+    /* Utils date */
+    function parseISO(d){ return new Date(d + 'T00:00:00') }
+    function fmtIT(date){ const dd=String(date.getDate()).padStart(2,'0'); const mm=String(date.getMonth()+1).padStart(2,'0'); const yyyy=date.getFullYear(); return `${dd}.${mm}.${yyyy}`; }
+    function daysBetween(today, target){ const MS = 24*60*60*1000; return Math.max(0, Math.ceil((target - today)/MS)); }
+
+    /* Revisione */
+    (function(){
+      const box=document.getElementById('box-revisione'); if(!box) return;
+      const raw=box.getAttribute('data-deadline-revisione');
+      const today=new Date(); const today0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+      const deadline=parseISO(raw); const days=daysBetween(today0, deadline);
+      const daysEl=document.getElementById('rev-days'); daysEl.textContent=days;
+      if(days <= 30) { daysEl.classList.add('state-bad'); }
+      else if(days <= 60) { daysEl.classList.add('state-warn'); }
+      else { daysEl.classList.add('state-good'); }
+      document.getElementById('rev-deadline').textContent='scadenza: '+fmtIT(deadline);
+    })();
+
+    /* Assicurazione */
+    (function(){
+      const box=document.getElementById('box-assicurazione'); if(!box) return;
+      const raw=box.getAttribute('data-deadline-assicurazione');
+      const today=new Date(); const today0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
+      const deadline=parseISO(raw); const txt=document.getElementById('ins-text');
+      if(today0 < deadline){
+        txt.textContent='Sì';
+        const days=daysBetween(today0, deadline);
+        if(days <= 30) txt.classList.add('state-warn'); else txt.classList.add('state-good');
+      } else { txt.textContent='No'; txt.classList.add('state-bad'); }
+      document.getElementById('ins-deadline').textContent='scadenza: '+fmtIT(deadline);
+    })();
+  </script>
+</body>
+</html>
