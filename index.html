@@ -71,7 +71,28 @@
     }
     .nav-dropdown a:hover{ border-color: rgba(255,255,255,.28) }
     .nav-dropdown a:active{ transform: translateY(1px) }
+/* --- MENU: layout mobile 3 per riga --- */
+@media (max-width:560px){
+  /* più spazio alla tendina quando aperta su mobile */
+  .navbar.is-open .nav-dropdown{ max-height: 70vh; }
 
+  .nav-dropdown__inner{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 per riga */
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .nav-dropdown a{
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   /* se un titolo è lungo */
+  }
+}
     /* Pagina */
     .page{max-width:var(--maxw);margin:0 auto;padding: 18px 16px; position: relative;}
 
