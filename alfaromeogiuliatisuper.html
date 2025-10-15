@@ -261,7 +261,7 @@
         <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
         <path d="M8 11h8"/><path d="M8 15h6"/>
       </svg>
-      <span class="chip-year">1965</span>
+      <span class="chip-year">1964</span>
     </span>
 
     <!-- Topstrip -->
@@ -453,7 +453,7 @@
       const today=new Date(); const today0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
       const deadline=parseISO(raw); const txt=document.getElementById('ins-text');
       if(today0 < deadline){
-        txt.textContent='Sì';
+        txt.textContent='No';
         const days=daysBetween(today0, deadline);
         if(days <= 30) txt.classList.add('state-warn'); else txt.classList.add('state-good');
       } else { txt.textContent='No'; txt.classList.add('state-bad'); }
