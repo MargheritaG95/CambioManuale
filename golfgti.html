@@ -168,9 +168,10 @@
     .infobox .big{font-size: clamp(20px,3vw,26px); font-weight:700; color: var(--beige); line-height:1.1; display:flex; gap:8px; align-items: baseline; justify-content:center;}
     .infobox .small{font-size: 12px; color: var(--muted)}
     .infobox .sub{margin-top:4px; font-size: 12px; color: var(--muted);}
-    .state-good{ color: var(--green); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(90,208,122,.25); }
-    .state-warn{ color: var(--orange); text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(255,169,77,.22); }
-    .state-bad { color: var(--red);   text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 10px rgba(255,107,107,.22); }
+    /* Colori di stato per Revisione e Assicurazione */
+.infobox .big.state-good { color: var(--green); }
+.infobox .big.state-warn { color: var(--orange); }
+.infobox .big.state-bad  { color: var(--red); }
 
     /* ====== Storia ====== */
     .story{margin-top: 4px;background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius: var(--radius);padding: clamp(16px,2vw,22px);box-shadow: var(--shadow)}
@@ -303,29 +304,32 @@
       </div>
       <div class="dots" id="dots" aria-hidden="true"></div>
     </section>
+   <!-- Azioni + Info -->
+<section class="actions" aria-label="Azioni e stato documenti">
+  <a class="action" href="Istruzioniprovabarth.png" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/><path d="M8 14h8"/><path d="M8 18h6"/></svg>
+    <span>Istruzioni d’uso (PDF)</span>
+  </a>
 
-    <!-- Azioni + Info -->
-    <section class="actions" aria-label="Azioni e stato documenti">
-      <a class="action" href="Istruzioniprovabarth.png" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/><path d="M8 14h8"/><path d="M8 18h6"/></svg>
-        <span>Istruzioni d’uso (PDF)</span>
-      </a>
-      <a class="action" href="../assets/audio/storia.mp3">
-        <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <span>Ascolta la storia (Audio)</span>
-      </a>
-      <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
-        <div class="title">Revisione in:</div>
-        <div class="big"><span id="rev-days">--</span><span class="small">giorni</span></div>
-        <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
-      </div>
-      <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-31">
-        <div class="title">Assicurazione</div>
-        <div class="big"><span id="ins-text">—</span></div>
-        <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
-      </div>
-    </section>
+  <button class="action" id="btnPlayStory" type="button" aria-pressed="false" aria-label="Riproduci Abarth Simca Storia (MP3)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span id="btnPlayStoryLabel">Ascolta la storia (MP3)</span>
+  </button>
 
+  <audio id="storyAudio" src="giulia ti super vlunga.mp3" preload="none"></audio>
+
+  <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
+    <div class="title">Revisione in:</div>
+    <div class="big"><span id="rev-days">--</span><span class="small">giorni</span></div>
+    <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
+  </div>
+
+  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2024-12-15">
+    <div class="title">Assicurazione</div>
+    <div class="big"><span id="ins-text">—</span></div>
+    <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
+  </div>
+</section>
     <!-- Storia -->
     <section class="story" id="storia">
       <h2>Storia</h2>
@@ -420,36 +424,100 @@
       }, {passive:true});
     })();
 
-    /* Utils date */
+      /* Utils date */
     function parseISO(d){ return new Date(d + 'T00:00:00') }
     function fmtIT(date){ const dd=String(date.getDate()).padStart(2,'0'); const mm=String(date.getMonth()+1).padStart(2,'0'); const yyyy=date.getFullYear(); return `${dd}.${mm}.${yyyy}`; }
     function daysBetween(today, target){ const MS = 24*60*60*1000; return Math.max(0, Math.ceil((target - today)/MS)); }
 
-    /* Revisione */
-    (function(){
-      const box=document.getElementById('box-revisione'); if(!box) return;
-      const raw=box.getAttribute('data-deadline-revisione');
-      const today=new Date(); const today0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
-      const deadline=parseISO(raw); const days=daysBetween(today0, deadline);
-      const daysEl=document.getElementById('rev-days'); daysEl.textContent=days;
-      if(days <= 30) { daysEl.classList.add('state-bad'); }
-      else if(days <= 60) { daysEl.classList.add('state-warn'); }
-      else { daysEl.classList.add('state-good'); }
-      document.getElementById('rev-deadline').textContent='scadenza: '+fmtIT(deadline);
-    })();
+   /* Revisione */
+(function(){
+  const box = document.getElementById('box-revisione'); 
+  if (!box) return;
 
-    /* Assicurazione */
+  const raw = box.getAttribute('data-deadline-revisione');
+  const today = new Date();
+  const today0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const deadline = parseISO(raw);
+  const days = daysBetween(today0, deadline);
+
+  const big = box.querySelector('.big');
+  const daysEl = document.getElementById('rev-days');
+  daysEl.textContent = days;
+
+  // reset classi
+  big.classList.remove('state-good','state-warn','state-bad');
+
+  if (days <= 30) big.classList.add('state-bad');
+  else if (days <= 60) big.classList.add('state-warn');
+  else big.classList.add('state-good');
+
+  document.getElementById('rev-deadline').textContent = 'scadenza: ' + fmtIT(deadline);
+})();
+
+/* Assicurazione */
+/* Assicurazione */
+(function(){
+  const box = document.getElementById('box-assicurazione'); 
+  if (!box) return;
+
+  const raw = box.getAttribute('data-deadline-assicurazione');
+  const today = new Date();
+  const today0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const deadline = parseISO(raw);
+
+  const big = box.querySelector('.big');
+  const txt = document.getElementById('ins-text');
+  const sub = document.getElementById('ins-deadline');
+
+  // reset classi
+  big.classList.remove('state-good','state-warn','state-bad');
+
+  if (today0 < deadline) {
+    // Assicurazione valida
+    txt.textContent = 'Sì';
+    const days = daysBetween(today0, deadline);
+    big.classList.add(days <= 30 ? 'state-warn' : 'state-good');
+    sub.textContent = 'scadenza: ' + fmtIT(deadline);
+    sub.style.display = ''; // mostra la data
+  } else {
+    // Scaduta → No e data nascosta
+    txt.textContent = 'No';
+    big.classList.add('state-bad');
+    sub.style.display = 'none'; // nasconde la data
+  }
+})();
+
+
+         /* Play / Pause audio tile */
     (function(){
-      const box=document.getElementById('box-assicurazione'); if(!box) return;
-      const raw=box.getAttribute('data-deadline-assicurazione');
-      const today=new Date(); const today0=new Date(today.getFullYear(),today.getMonth(),today.getDate());
-      const deadline=parseISO(raw); const txt=document.getElementById('ins-text');
-      if(today0 < deadline){
-        txt.textContent='Sì';
-        const days=daysBetween(today0, deadline);
-        if(days <= 30) txt.classList.add('state-warn'); else txt.classList.add('state-good');
-      } else { txt.textContent='No'; txt.classList.add('state-bad'); }
-      document.getElementById('ins-deadline').textContent='scadenza: '+fmtIT(deadline);
+      const btn = document.getElementById('btnPlayStory');
+      const audio = document.getElementById('storyAudio');
+      const label = document.getElementById('btnPlayStoryLabel');
+      if(!btn || !audio) return;
+
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          if (audio.paused) {
+            await audio.play(); // user click allows playback
+            btn.setAttribute('aria-pressed','true');
+            label.textContent = 'Pausa audio';
+          } else {
+            audio.pause();
+            btn.setAttribute('aria-pressed','false');
+            label.textContent = 'Ascolta la storia (MP3)';
+          }
+        } catch (err) {
+          console.warn('Playback failed:', err);
+          // fallback: apri il file in una nuova scheda
+          window.open('abarthsimcastoria.mp3', '_blank', 'noopener');
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        btn.setAttribute('aria-pressed','false');
+        label.textContent = 'Ascolta la storia (MP3)';
+      });
     })();
   </script>
 </body>

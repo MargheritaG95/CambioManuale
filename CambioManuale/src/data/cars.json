@@ -1,0 +1,58 @@
+{
+  "cars": [
+    {
+      "make": "Abarth",
+      "model": "Simca 2000",
+      "year": 1965,
+      "engine": {
+        "type": "Inline-4",
+        "displacement": "1.946 cm³",
+        "power": "200 CV",
+        "rpm": "7200"
+      },
+      "performance": {
+        "topSpeed": "270 km/h",
+        "acceleration": "0-100 km/h in 6.5 seconds",
+        "fuelConsumption": "15–18 l/100km"
+      },
+      "productionYears": "1963-1965",
+      "description": "The Abarth Simca 2000 Tipo 136 is known for its lightweight design and impressive speed, making it a formidable competitor in racing."
+    },
+    {
+      "make": "Alfa Romeo",
+      "model": "Giulia TI Super",
+      "year": 1965,
+      "engine": {
+        "type": "Inline-4",
+        "displacement": "1.570 cm³",
+        "power": "112 CV",
+        "rpm": "6000"
+      },
+      "performance": {
+        "topSpeed": "190 km/h",
+        "acceleration": "0-100 km/h in 8.5 seconds",
+        "fuelConsumption": "10 l/100km"
+      },
+      "productionYears": "1962-1965",
+      "description": "The Alfa Romeo Giulia TI Super is celebrated for its balance of performance and elegance, making it a classic in automotive history."
+    },
+    {
+      "make": "Cadillac",
+      "model": "Fleetwood",
+      "year": 1965,
+      "engine": {
+        "type": "V8",
+        "displacement": "7.0 L",
+        "power": "340 CV",
+        "rpm": "4600"
+      },
+      "performance": {
+        "topSpeed": "200 km/h",
+        "acceleration": "0-100 km/h in 10 seconds",
+        "fuelConsumption": "15 l/100km"
+      },
+      "productionYears": "1965-1976",
+      "description": "The Cadillac Fleetwood is known for its luxurious features and powerful performance, representing the pinnacle of American automotive design."
+    }
+  ]
+}
