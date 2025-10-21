@@ -134,9 +134,34 @@
     /* ====== Gallery ====== */
     .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
     .slides{position:relative;width:100%;aspect-ratio: 16/9;overflow:hidden}
-    .slide{position:absolute;inset:0;opacity:0;transform: scale(1.02);transition: opacity .5s ease, transform .6s ease;display:grid;place-items:center;background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));}
-    .slide.is-active{opacity:1;transform: scale(1)}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block;filter: saturate(0.95) contrast(1.02);}
+    .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .5s ease, transform .6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));
+}
+
+.slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  filter: saturate(0.95) contrast(1.02);
+  background-color: #0a1a2b; /* o var(--blue-deep-2) per coerenza cromatica */
+  border-radius: 8px; /* opzionale: bordi arrotondati */
+}
+
     .nav{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
     .arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background: rgba(10,20,30,.35);backdrop-filter: blur(6px);display:grid;place-items:center;opacity:0;transition: opacity .25s ease, transform .2s ease, border-color .2s ease;transform: translateY(2px)}
     .gallery:hover .arrow, .arrow:focus-visible{opacity:.9; transform:none}
@@ -295,10 +320,8 @@
     <section class="gallery" aria-label="Galleria immagini">
       <div class="slides" id="slides">
         <figure class="slide is-active"><img src="simca.jpg" alt="[NOME MACCHINA] – vista 1"></figure>
-        <figure class="slide"><img src="simcafronte.jpeg" alt="[NOME MACCHINA] – vista 2"></figure>
-        <figure class="slide"><img src="simcapista.jpeg" alt="[NOME MACCHINA] – vista 3"></figure>
-        <figure class="slide"><img src="simcapista retro.jpeg" alt="[NOME MACCHINA] – vista 3"></figure>
-      </div>
+        <figure class="slide"><img src="simcaexpo.jpeg" alt="[NOME MACCHINA] – vista 2"></figure>
+             </div>
       <div class="nav" aria-hidden="true">
         <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
         <button class="arrow nav-right" id="next" aria-label="Immagine successiva"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg></button>
@@ -318,7 +341,7 @@
     <span id="btnPlayStoryLabel">Ascolta la storia (MP3)</span>
   </button>
 
-  <audio id="storyAudio" src="giulia ti super vlunga.mp3" preload="none"></audio>
+  <audio id="storyAudio" src="abarthsimcastoria.mp3" preload="none"></audio>
 
   <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
     <div class="title">Revisione in:</div>

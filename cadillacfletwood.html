@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Abarth Simca 2000 Tipo 136 - 1965 – Scheda</title>
+  <title>Cadillac Fleetwood - 1972 – Scheda</title>
   <meta name="color-scheme" content="dark light" />
   <style>
     :root{
@@ -134,9 +134,34 @@
     /* ====== Gallery ====== */
     .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
     .slides{position:relative;width:100%;aspect-ratio: 16/9;overflow:hidden}
-    .slide{position:absolute;inset:0;opacity:0;transform: scale(1.02);transition: opacity .5s ease, transform .6s ease;display:grid;place-items:center;background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));}
-    .slide.is-active{opacity:1;transform: scale(1)}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block;filter: saturate(0.95) contrast(1.02);}
+    .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .5s ease, transform .6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));
+}
+
+.slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  filter: saturate(0.95) contrast(1.02);
+  background-color: #0a1a2b; /* o var(--blue-deep-2) per coerenza cromatica */
+  border-radius: 8px; /* opzionale: bordi arrotondati */
+}
+
     .nav{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
     .arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background: rgba(10,20,30,.35);backdrop-filter: blur(6px);display:grid;place-items:center;opacity:0;transition: opacity .25s ease, transform .2s ease, border-color .2s ease;transform: translateY(2px)}
     .gallery:hover .arrow, .arrow:focus-visible{opacity:.9; transform:none}
@@ -353,7 +378,7 @@
     <div>
       <div class="designer__label">Designer</div>
       <div class="designer__name">Bill Mitchell <span class="designer__years">(1912-1988)</span></div>
-      <p class="designer__text">Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.</p>
+      <p class="designer__text">Come capo del design di General Motors, contribuì a trasformare la Cadillac Fleetwood in un’icona di eleganza e prestigio. Introdusse linee più pulite, proporzioni armoniose e uno stile sofisticato che sostituì le forme eccessive del dopoguerra, rendendo la vettura simbolo del lusso americano moderno.</p>
     </div>
   </section>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Abarth Simca 2000 Tipo 136 - 1965 – Scheda</title>
+  <title>Mercedes 600 SL - 1995 – Scheda</title>
   <meta name="color-scheme" content="dark light" />
   <style>
     :root{
@@ -134,9 +134,34 @@
     /* ====== Gallery ====== */
     .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
     .slides{position:relative;width:100%;aspect-ratio: 16/9;overflow:hidden}
-    .slide{position:absolute;inset:0;opacity:0;transform: scale(1.02);transition: opacity .5s ease, transform .6s ease;display:grid;place-items:center;background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));}
-    .slide.is-active{opacity:1;transform: scale(1)}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block;filter: saturate(0.95) contrast(1.02);}
+    .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity .5s ease, transform .6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));
+}
+
+.slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+  filter: saturate(0.95) contrast(1.02);
+  background-color: #0a1a2b; /* o var(--blue-deep-2) per coerenza cromatica */
+  border-radius: 8px; /* opzionale: bordi arrotondati */
+}
+
     .nav{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
     .arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background: rgba(10,20,30,.35);backdrop-filter: blur(6px);display:grid;place-items:center;opacity:0;transition: opacity .25s ease, transform .2s ease, border-color .2s ease;transform: translateY(2px)}
     .gallery:hover .arrow, .arrow:focus-visible{opacity:.9; transform:none}
@@ -294,9 +319,8 @@
     <!-- Gallery -->
     <section class="gallery" aria-label="Galleria immagini">
       <div class="slides" id="slides">
-        <figure class="slide is-active"><img src="mercedes600retro.webp" alt="[NOME MACCHINA] – vista 1"></figure>
-        <figure class="slide"><img src="../assets/img/macchina-2.jpg" alt="[NOME MACCHINA] – vista 2"></figure>
-        <figure class="slide"><img src="../assets/img/macchina-3.jpg" alt="[NOME MACCHINA] – vista 3"></figure>
+        <figure class="slide is-active"><img src="mercedesavanti.jpeg" alt="[NOME MACCHINA] – vista 1"></figure>
+        <figure class="slide"><img src="mercedes600retro.webp" alt="[NOME MACCHINA] – vista 2"></figure>
       </div>
       <div class="nav" aria-hidden="true">
         <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
@@ -355,7 +379,7 @@
     <div>
       <div class="designer__label">Designer</div>
       <div class="designer__name">Bruno Sacco <span class="designer__years">(1933-2024)</span></div>
-      <p class="designer__text">Ha fatto la storia del design automobilistico introducendo linee pulite, proporzioni armoniose e uno stile moderno che ha rivoluzionato l’estetica europea del dopoguerra. Con oltre 1.200 progetti per marchi come Ferrari, Maserati, BMW e Triumph, ha contribuito a definire l’identità visiva di molte case e l’evoluzione del design automobilistico moderno.</p>
+      <p class="designer__text">Come direttore del design di Mercedes-Benz, lasciò un’impronta indelebile nella storia dell’automobile moderna. Con la sua visione di eleganza funzionale e coerenza stilistica, definì per decenni l’identità del marchio, introducendo linee pulite e proporzioni equilibrate che coniugavano estetica e sicurezza. Il suo lavoro trasformò Mercedes in un punto di riferimento mondiale per design, innovazione e raffinatezza senza tempo.</p>
     </div>
   </section>
 
