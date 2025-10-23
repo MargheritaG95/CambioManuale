@@ -219,6 +219,15 @@
     .designer__img img{ width:100%; border-radius:12px; }
     .designer__label{font-size:12px; row-gap:1.2em; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
     .designer__name{margin:4px 0;row-gap:1.2em;font:20px;color:var(--beige)} /* include anche gli anni su desktop */
+.story strong{
+  color: var(--beige);
+  font-weight: 700;
+}
+.story h3,
+.story h3 strong{
+  color: var(--beige);
+  font-weight: 700;
+}
 
     /* SOLO mobile */
     @media (max-width:560px){
@@ -245,7 +254,7 @@
       .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
       .designer > div{ display:grid; grid-template-columns: 1fr; grid-auto-rows:auto; row-gap:2px; }
       .designer__years{ display:block; }
-      .designer__text{ grid-row:auto; margin:auto; font-size:14px; }
+      .designer__text{ grid-row:auto; margin:auto; font-size:1rem; }
     }
   </style>
 </head>
@@ -269,6 +278,7 @@
           <a href="fiat500l.html">Fiat 500 l</a>
           <a href="fiat500abarth.html">Fiat 500 Abarth</a>
           <a href="golfgti.html">Golf GTI</a>
+          <a href="mercedes300sl.html">Mercedes 300 SL</a>
           <a href="mercedes350sl.html">Mercedes 350 SL</a>
           <a href="mercedes600sl.html">Mercedes 600 SL</a>
           <a href="rollsroyce.html">Rolls Royce</a>
@@ -326,8 +336,7 @@
         <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
         <button class="arrow nav-right" id="next" aria-label="Immagine successiva"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="dots" id="dots" aria-hidden="true"></div>
-    </section>
+      </section>
 
  <!-- Azioni + Info -->
 <section class="actions" aria-label="Azioni e stato documenti">

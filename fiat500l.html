@@ -170,10 +170,7 @@
     .arrow:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
     .nav-left{margin-left:10px}
     .nav-right{margin-right:10px}
-    .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center}
-    .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:1px solid rgba(0,0,0,.25);box-shadow:0 1px 0 rgba(0,0,0,.25);transition: transform .15s ease, background .2s ease}
-    .dot.is-active{background: var(--gold); transform: scale(1.2)}
-
+   
     /* ====== Azioni / Info ====== */
     .actions{ display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: var(--gap) 0; max-width: var(--maxw); align-items:stretch; }
     @media (max-width:1000px){ .actions{ grid-template-columns:1fr 1fr } }
@@ -245,8 +242,18 @@
       .designer__img img{ width:100%; height:100%; object-fit:cover; border-radius:12px; }
       .designer > div{ display:grid; grid-template-columns: 1fr; grid-auto-rows:auto; row-gap:2px; }
       .designer__years{ display:block; }
-      .designer__text{ grid-row:auto; margin:auto; font-size:14px; }
+      .designer__text{ grid-row:auto; margin:auto; font-size:1rem; }
     }
+    .story strong{
+  color: var(--beige);
+  font-weight: 700;
+}
+.story h3,
+.story h3 strong{
+  color: var(--beige);
+  font-weight: 900;
+}
+
   </style>
 </head>
 <body>
@@ -269,6 +276,7 @@
           <a href="fiat500l.html">Fiat 500 l</a>
           <a href="fiat500abarth.html">Fiat 500 Abarth</a>
           <a href="golfgti.html">Golf GTI</a>
+          <a href="mercedes300sl.html">Mercedes 300 SL</a>
           <a href="mercedes350sl.html">Mercedes 350 SL</a>
           <a href="mercedes600sl.html">Mercedes 600 SL</a>
           <a href="rollsroyce.html">Rolls Royce</a>
