@@ -256,6 +256,54 @@
       .designer__years{ display:block; }
       .designer__text{ grid-row:auto; margin:auto; font-size:1rem; }
     }
+
+/* === Aggiunta SOLO per Assicurazione: badge + popup + layout mobile === */
+.badgeCount{
+  position:absolute; top:8px; right:8px;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 8px; border-radius:999px; border:1px solid var(--line);
+  background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  color:var(--beige); font-size:12px; line-height:1; cursor:pointer;
+}
+.badgeCount svg{ width:14px; height:14px; }
+
+.modal[hidden]{ display:none !important; }
+.modal{ position: fixed; inset:0; display:grid; place-items:center; background: rgba(5,10,20,.88); backdrop-filter: blur(6px); z-index: 2000; padding: 24px; }
+.modal__dialog{ width:min(560px, 94vw); background: linear-gradient(180deg, #101b2a, #0c1420); border:1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 18px; color: var(--ink); }
+.modal__title{ margin:0 0 10px; font-size: clamp(18px,2.4vw,22px); color: var(--beige); }
+.drivers{ display:grid; gap:10px; margin-top:8px; }
+.driver{ display:flex; gap:10px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:12px; background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); }
+.avatar{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:#122338; color:var(--beige); font-weight:700; }
+.driver .name{ font-weight:600; }
+.driver .note{ font-size:12px; color:var(--muted); }
+.modal__footer{ display:flex; justify-content:flex-end; margin-top:12px; }
+.btn{ appearance:none; border:1px solid var(--line); background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); color:var(--ink); padding:8px 12px; border-radius:10px; cursor:pointer; }
+
+/* Badge accanto al Sì/No su mobile */
+@media (max-width:560px){
+  #box-assicurazione{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "title title"
+      "big   badge"
+      "sub   sub";
+    align-items: center;
+    justify-content: center;
+    gap: 6px 8px;
+    padding-bottom: 10px;
+  }
+  #box-assicurazione .title{ grid-area: title; }
+  #box-assicurazione .big{ grid-area: big; display:flex; align-items:center; justify-content:center; gap:6px; }
+  #box-assicurazione .sub{ grid-area: sub; }
+  #box-assicurazione .badgeCount{
+    grid-area: badge;
+    position: static;
+    margin: 0;
+    transform: none;
+  }
+}
+/* === Fine aggiunta SOLO Assicurazione === */
   </style>
 </head>
 <body>
@@ -358,18 +406,32 @@
     <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
   </div>
 
-  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2024-12-15">
+  <!-- ====== Assicurazione (UNICA modifica) ====== -->
+  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15"
+       style="position:relative"
+       data-drivers='[
+         {"name":"Margherita B.","note":"Titolare polizza"},
+         {"name":"Andrea R.","note":"Uso saltuario"},
+         {"name":"Giulia M.","note":"Limite 5000 km/anno"}
+       ]'>
+    <!-- badge -->
+    <button class="badgeCount" id="driversBadge" type="button" title="Guidatori autorizzati" aria-label="Guidatori: 0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z" fill="currentColor"/></svg>
+      <span id="driversCount">0</span>
+    </button>
+
     <div class="title">Assicurazione</div>
     <div class="big"><span id="ins-text">—</span></div>
     <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
   </div>
+  <!-- ====== Fine Assicurazione ====== -->
 </section>
 
     <!-- Storia -->
     <section class="story" id="storia">
       <h2>Storia</h2>
       <div class="divider"></div>
-      <p>La Cadillac Fleetwood è stata per oltre 60 anni un punto di riferimento nel mercato delle auto di lusso: enorme, comoda, silenziosa e opulenta e con il V8 più grande mai visto su un’auto di serie. Rappresentava il sogno americano a quattro ruote. Un simbolo dell’opulenza americana pre-crisi petrolifera, oggi è un pezzo da collezione ricercatissimo.</p>
+      <p>La Cadillac Fleetwood è stata per oltre 60 anni un punto di riferimento nel mercato delle auto di lusso: enorme, comoda, silenziosa e opulenta e con il V8 più grande mai visto su un’auto di serie. Rappresentava il sogno americano a quattro ruote. Un simbolo dell’opulenza americana pre-crisi petrolifera, oggi è un pezzo da collezione ricercatissimo.</p>
 
       <h3 class="story-subtitle"> <strong>Perchè ha fatto la storia:</strong></h3>
 
@@ -390,6 +452,18 @@
       <p class="designer__text">Come capo del design di General Motors, contribuì a trasformare la Cadillac Fleetwood in un’icona di eleganza e prestigio. Introdusse linee più pulite, proporzioni armoniose e uno stile sofisticato che sostituì le forme eccessive del dopoguerra, rendendo la vettura simbolo del lusso americano moderno.</p>
     </div>
   </section>
+
+  <!-- ====== MODAL POPUP (Assicurazione) ====== -->
+  <div class="modal" id="driversModal" role="dialog" aria-modal="true" aria-labelledby="driversTitle" hidden>
+    <div class="modal__dialog" role="document">
+      <h3 class="modal__title" id="driversTitle">Guidatori autorizzati</h3>
+      <div class="drivers" id="driversList"></div>
+      <div class="modal__footer">
+        <button class="btn" type="button" id="driversClose">Chiudi</button>
+      </div>
+    </div>
+  </div>
+  <!-- ====== FINE MODAL ====== -->
 
   <script>
     /* Dropdown open/close */
@@ -490,7 +564,6 @@
 })();
 
 /* Assicurazione */
-/* Assicurazione */
 (function(){
   const box = document.getElementById('box-assicurazione'); 
   if (!box) return;
@@ -522,6 +595,51 @@
   }
 })();
 
+/* === JS per badge + popup guidatori (Assicurazione) === */
+(function(){
+  const box = document.getElementById('box-assicurazione');
+  if(!box) return;
+
+  const drivers = JSON.parse(box.getAttribute('data-drivers') || '[]');
+  const countEl = document.getElementById('driversCount');
+  const badgeBtn = document.getElementById('driversBadge');
+  const modal = document.getElementById('driversModal');
+  const list = document.getElementById('driversList');
+  const closeBtn = document.getElementById('driversClose');
+
+  const count = Array.isArray(drivers) ? drivers.length : 0;
+  if(countEl) countEl.textContent = count;
+  if(badgeBtn) badgeBtn.setAttribute('aria-label', 'Guidatori: ' + count);
+
+  function openModal(){
+    list.innerHTML = '';
+    drivers.forEach(d=>{
+      const initials = d.name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+      const row = document.createElement('div');
+      row.className = 'driver';
+      row.innerHTML = `
+        <div class="avatar">${initials}</div>
+        <div>
+          <div class="name">${d.name}</div>
+          <div class="note">${d.note || ''}</div>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  badgeBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  window.addEventListener('keydown', (e)=>{ if(!modal.hidden && e.key==='Escape') closeModal(); });
+})();
+/* === FINE JS per badge + popup === */
 
          /* Play / Pause audio tile */
     (function(){
@@ -534,7 +652,7 @@
         e.preventDefault();
         try {
           if (audio.paused) {
-            await audio.play(); // user click allows playback
+            await audio.play(); // user click permette la riproduzione
             btn.setAttribute('aria-pressed','true');
             label.textContent = 'Pausa audio';
           } else {
@@ -557,3 +675,4 @@
   </script>
 </body>
 </html>
+
