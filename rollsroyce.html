@@ -195,6 +195,34 @@
 .infobox .big.state-warn { color: var(--orange); }
 .infobox .big.state-bad  { color: var(--red); }
 
+/* ========= AGGIUNTE SOLO PER IL BADGE + POPUP ========= */
+
+/* Badge (icona profilo + numero) */
+.badgeCount{
+  position:absolute; top:8px; right:8px;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 8px; border-radius:999px;
+  border:1px solid var(--line);
+  background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  color:var(--beige); font-size:12px; line-height:1;
+  cursor:pointer;
+}
+.badgeCount svg{ width:14px; height:14px; }
+
+/* Modal (popup) minimal */
+.modal[hidden]{ display:none !important; }
+.modal{ position: fixed; inset:0; display:grid; place-items:center; background: rgba(5,10,20,.88); backdrop-filter: blur(6px); z-index: 2000; padding: 24px; }
+.modal__dialog{ width:min(560px, 94vw); background: linear-gradient(180deg, #101b2a, #0c1420); border:1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 18px; color: var(--ink); }
+.modal__title{ margin:0 0 10px; font-size: clamp(18px,2.4vw,22px); color: var(--beige); }
+.drivers{ display:grid; gap:10px; margin-top:8px; }
+.driver{ display:flex; gap:10px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:12px; background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); }
+.avatar{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:#122338; color:var(--beige); font-weight:700; }
+.driver .name{ font-weight:600; }
+.driver .note{ font-size:12px; color:var(--muted); }
+.modal__footer{ display:flex; justify-content:flex-end; margin-top:12px; }
+.btn{ appearance:none; border:1px solid var(--line); background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); color:var(--ink); padding:8px 12px; border-radius:10px; cursor:pointer; }
+/* ========= FINE AGGIUNTE ========= */
+
     /* ====== Storia ====== */
     .story{margin-top: 4px;background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border:1px solid var(--line);border-radius: var(--radius);padding: clamp(16px,2vw,22px);box-shadow: var(--shadow)}
     .story h2{margin: 0 0 8px 0;font-size: clamp(20px,2.8vw,26px);color: var(--beige)}
@@ -292,7 +320,7 @@
     <!-- CHIP -->
     <span class="chip" aria-label="Anno modello">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2 2V4a2 2 0 0 1 2-2z"/>
         <path d="M8 11h8"/><path d="M8 15h6"/>
       </svg>
       <span class="chip-year">1967</span>
@@ -337,7 +365,7 @@
         <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
         <button class="arrow nav-right" id="next" aria-label="Immagine successiva"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="dots" id="dots" aria-hidden="true"></div>
+
     </section>
 
    <!-- Azioni + Info -->
@@ -360,11 +388,24 @@
     <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
   </div>
 
-  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15">
+  <!-- ====== BOX ASSICURAZIONE (AGGIUNTO SOLO BADGE + POPUP) ====== -->
+  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15" style="position:relative"
+       data-drivers='[
+         {"name":"Margherita B.","note":"Titolare polizza"},
+         {"name":"Andrea R.","note":"Uso saltuario"},
+         {"name":"Giulia M.","note":"Limite 5000 km/anno"}
+       ]'>
+    <!-- badge profilo + numero -->
+    <button class="badgeCount" id="driversBadge" type="button" title="Guidatori autorizzati" aria-label="Guidatori: 0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z" fill="currentColor"/></svg>
+      <span id="driversCount">0</span>
+    </button>
+
     <div class="title">Assicurazione</div>
     <div class="big"><span id="ins-text">—</span></div>
     <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
   </div>
+  <!-- ====== FINE BOX ASSICURAZIONE ====== -->
 </section>
     <!-- Storia -->
     <section class="story" id="storia">
@@ -386,6 +427,18 @@
       <p class="designer__text">Come capo designer di Rolls-Royce e Bentley, segnò la storia dell’automobile di lusso con la sua eleganza sobria e raffinata. Con un gusto impeccabile per le proporzioni e i dettagli, creò modelli iconici come la Rolls-Royce Silver Cloud e la Bentley Continental R-Type, che incarnavano perfezione artigianale e prestigio britannico. La sua visione definì per sempre l’estetica del lusso su quattro ruote</p>
     </div>
   </section>
+
+  <!-- ====== MODAL POPUP (solo per badge guidatori) ====== -->
+  <div class="modal" id="driversModal" role="dialog" aria-modal="true" aria-labelledby="driversTitle" hidden>
+    <div class="modal__dialog" role="document">
+      <h3 class="modal__title" id="driversTitle">Guidatori autorizzati</h3>
+      <div class="drivers" id="driversList"></div>
+      <div class="modal__footer">
+        <button class="btn" type="button" id="driversClose">Chiudi</button>
+      </div>
+    </div>
+  </div>
+  <!-- ====== FINE MODAL POPUP ====== -->
 
   <script>
     /* Dropdown open/close */
@@ -517,6 +570,54 @@
     sub.style.display = 'none'; // nasconde la data
   }
 })();
+
+/* ========= JS AGGIUNTO SOLO PER BADGE + POPUP ========= */
+(function(){
+  const box = document.getElementById('box-assicurazione');
+  if(!box) return;
+
+  const drivers = JSON.parse(box.getAttribute('data-drivers') || '[]');
+  const count = Array.isArray(drivers) ? drivers.length : 0;
+
+  const countEl = document.getElementById('driversCount');
+  const badgeBtn = document.getElementById('driversBadge');
+  const modal = document.getElementById('driversModal');
+  const list = document.getElementById('driversList');
+  const closeBtn = document.getElementById('driversClose');
+
+  if(countEl) countEl.textContent = count;
+  if(badgeBtn) badgeBtn.setAttribute('aria-label', 'Guidatori: ' + count);
+
+  function openModal(){
+    // popola elenco
+    list.innerHTML = '';
+    drivers.forEach(d=>{
+      const initials = d.name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+      const row = document.createElement('div');
+      row.className = 'driver';
+      row.innerHTML = `
+        <div class="avatar">${initials}</div>
+        <div>
+          <div class="name">${d.name}</div>
+          <div class="note">${d.note || ''}</div>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  badgeBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  window.addEventListener('keydown', (e)=>{ if(!modal.hidden && e.key==='Escape') closeModal(); });
+})();
+/* ========= FINE JS AGGIUNTO ========= */
 
 
          /* Play / Pause audio tile */

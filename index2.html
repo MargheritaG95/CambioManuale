@@ -1,177 +1,554 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Garage – Home</title>
-<meta name="color-scheme" content="dark light" />
-<style>
-  :root{
-    --blue-deep:#0a1a2b; --blue-deep-2:#0f253b; --beige:#d9c7a6; --ink:#eae7e1; --muted:#b9c3cf;
-    --line:#22364c; --shadow:0 14px 40px rgba(0,0,0,.35); --radius:16px; --maxw:1200px; --gap:clamp(10px,1.8vw,16px);
-    --gold:#c8ab6e; --focus:#f5d79a;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mercedes 350 SL - 1971 – Scheda</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --blue-deep:#0a1a2b; --blue-deep-2:#0f253b; --beige:#d9c7a6; --ink:#eae7e1; --muted:#b9c3cf;
+      --line:#22364c; --shadow:0 14px 40px rgba(0,0,0,.35); --radius:16px; --radius-s:12px;
+      --gold:#c8ab6e; --focus:#f5d79a; --gap:clamp(10px,1.8vw,16px); --maxw:1200px;
+      --green:#5AD07A; --orange:#FFA94D; --red:#FF6B6B;
+    }
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--blue-deep) 0%, var(--blue-deep-2) 100%);color:var(--ink);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;}
+    *,*:before,*:after{box-sizing:border-box}
+
+    /* ====== Navbar ====== */
+    .navbar{
+      position: sticky; top:0; z-index:1000;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(10,20,30,.75), rgba(10,20,30,.35));
+      border-bottom: 1px solid var(--line);
+      overflow: visible;
+    }
+    .nav-inner{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display:flex; align-items:center; gap:12px;
+      position: relative;
+    }
+    .hamburger{
+      width:42px; height:42px; border-radius:10px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(10,20,30,.35);
+      display:grid; place-items:center; cursor:pointer;
+      transition: border-color .2s ease, transform .12s ease;
+    }
+    .hamburger:hover{ border-color: rgba(255,255,255,.4) }
+    .hamburger:focus-visible{ outline:2px solid var(--focus); outline-offset:3px }
+    .hamburger svg{ width:22px; height:22px; stroke: var(--ink); fill:none; stroke-width:2.2 }
+    .brand-title{ font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted) }
+
+    .nav-dropdown{
+      position: absolute;
+      left:0; right:0; top:100%;
+      background:#0b1726;
+      border-bottom:1px solid var(--line);
+      box-shadow: var(--shadow);
+      max-height:0; overflow:hidden;
+      transition: max-height .28s ease;
+    }
+    .navbar.is-open .nav-dropdown{ max-height: 240px; }
+    .nav-dropdown__inner{
+      max-width: var(--maxw);
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex; gap:12px; align-items:center; flex-wrap: wrap;
+    }
+    .nav-dropdown a{
+      color:var(--ink); text-decoration:none;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      transition: transform .12s ease, border-color .2s ease, background .3s ease;
+      white-space:nowrap;
+      font-size:15px;
+    }
+    .nav-dropdown a:hover{ border-color: rgba(255,255,255,.28) }
+    .nav-dropdown a:active{ transform: translateY(1px) }
+@media (max-width:560px){
+  .navbar.is-open .nav-dropdown{ max-height: 70vh; }
+  .nav-dropdown__inner{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 10px 12px;
   }
-  html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--blue-deep),var(--blue-deep-2));color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
-  *,*:before,*:after{box-sizing:border-box}
+  .nav-dropdown a{
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+    /* Pagina */
+    .page{max-width:var(--maxw);margin:0 auto;padding: 18px 16px; position: relative;}
 
-  /* NAVBAR */
-  .navbar{position:sticky;top:0;z-index:10;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(10,20,30,.75),rgba(10,20,30,.35));border-bottom:1px solid var(--line)}
-  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;position:relative}
-  .hamburger{width:42px;height:42px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(10,20,30,.35);display:grid;place-items:center;cursor:pointer}
-  .hamburger svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2.2}
-  .brand-title{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-  .nav-dropdown{position:absolute;left:0;right:0;top:100%;background:#0b1726;border-bottom:1px solid var(--line);box-shadow:var(--shadow);max-height:0;overflow:hidden;transition:max-height .28s}
-  .navbar.is-open .nav-dropdown{max-height:240px}
-  .nav-dropdown__inner{max-width:var(--maxw);margin:0 auto;padding:12px 16px;display:flex;gap:12px;flex-wrap:wrap}
-  .nav-dropdown a{color:var(--ink);text-decoration:none;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
-  @media (max-width:560px){.navbar.is-open .nav-dropdown{max-height:70vh}.nav-dropdown__inner{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}}
+    /* CHIP */
+    .chip{ position:absolute; top:5px; right:16px; display:inline-flex; align-items:center; gap:6px;
+      padding:4px 10px; border-radius:999px; border:1px solid rgba(200,171,110,.55);
+      background: radial-gradient(380px 90px at 50% 0%, rgba(255,255,255,.1), rgba(255,255,255,0)); box-shadow:var(--shadow); white-space:nowrap; }
+    .chip svg{ width:14px; height:14px; stroke: var(--gold); fill:none; stroke-width:1.8 }
+    .chip-year{ color:var(--beige); font-weight:700; }
 
-  /* HERO */
-  .hero{max-width:var(--maxw);margin:18px auto;padding:18px 16px 0;text-align:center}
-  .neon{border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 18px;background:radial-gradient(900px 300px at 50% 0%,rgba(255,255,255,.05),rgba(255,255,255,0))}
-  .neon h1{margin:0;font-weight:800;color:var(--beige);font-size:clamp(28px,4.5vw,46px);text-shadow:0 0 12px rgba(200,171,110,.35)}
+    /* ====== Topstrip ====== */
+    .topstrip{
+      display:grid;
+      grid-template-columns: 1.2fr repeat(5, 1fr);
+      gap: var(--gap);
+      align-items:stretch;
+      margin-top: 35px;
+      margin-bottom: var(--gap);
+    }
+    .name{display:flex; align-items:flex-end; padding: 10px 0;}
+    .name__label{font-size: 12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-right:10px;}
+    .name__value{font-size: clamp(28px, 4.2vw, 40px); font-weight:600; letter-spacing:.015em; line-height:1.1; color:var(--beige);}
 
-  /* GRID CARD */
-  .grid{max-width:var(--maxw);margin:20px auto;padding:0 16px 26px;display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
-  .car-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));box-shadow:var(--shadow);overflow:hidden;text-decoration:none;color:var(--ink);transition:transform .18s,border-color .25s,box-shadow .25s}
-  .car-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.28)}
+    .spec{
+      background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius-s);
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column; justify-content:center;
+      min-height: 55px;
+    }
+    .spec .label{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+    .spec .value{font-size: clamp(18px,2.6vw,22px); font-weight:600; color:var(--beige)}
 
-  /* MEDIA: foto a copertura totale */
-  .car-media{position:relative;width:100%;height:280px;/* aumenta/diminuisci se vuoi */background:#000;overflow:hidden}
-  .car-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;/* COPRE la box */object-position:center}
+    .spec-row-mobile{ display:none; }
+
+    /* ====== Gallery ====== */
+    .gallery{ position:relative;margin: 0 auto; background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    .slides{position:relative;width:100%;aspect-ratio: 16/9;overflow:hidden}
+    .slide {
+      position: absolute; inset: 0; opacity: 0; transform: scale(1.02);
+      transition: opacity .5s ease, transform .6s ease;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(1200px 600px at 50% 20%, rgba(255,255,255,.05), rgba(0,0,0,.0));
+    }
+    .slide.is-active { opacity: 1; transform: scale(1); }
+    .slide img {
+      max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: auto;
+      filter: saturate(0.95) contrast(1.02); background-color: #0a1a2b; border-radius: 8px;
+    }
+
+    .nav{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+    .arrow{pointer-events:auto;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background: rgba(10,20,30,.35);backdrop-filter: blur(6px);display:grid;place-items:center;opacity:0;transition: opacity .25s ease, transform .2s ease, border-color .2s ease;transform: translateY(2px)}
+    .gallery:hover .arrow, .arrow:focus-visible{opacity:.9; transform:none}
+    .arrow:hover{border-color:rgba(255,255,255,.4)}
+    .arrow svg{width:20px;height:20px;fill:none;stroke: var(--ink);stroke-width:2.2}
+    .arrow:focus-visible{outline:2px solid var(--focus); outline-offset:3px}
+    .nav-left{margin-left:10px}
+    .nav-right{margin-right:10px}
  
-  /* Effetto fari */
-  .headlight{position:absolute;inset:0;opacity:0;transition:opacity .25s;pointer-events:none;mix-blend-mode:screen;
-    background:
-      radial-gradient(180px 120px at 18% 58%, rgba(255,255,200,.6), rgba(255,255,200,0) 60%),
-      radial-gradient(180px 120px at 82% 58%, rgba(255,255,200,.6), rgba(255,255,200,0) 60%),
-      linear-gradient( to bottom, rgba(255,255,200,.18), rgba(255,255,200,0) 60%);
-    filter: blur(1px);
-  }
-  .car-card:hover .headlight{opacity:.95}
+    /* ====== Azioni / Info ====== */
+    .actions{ display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: var(--gap) 0; max-width: var(--maxw); align-items:stretch; }
+    @media (max-width:1000px){ .actions{ grid-template-columns:1fr 1fr } }
+    @media (max-width:560px){
+      .actions{ grid-template-columns:1fr 1fr; gap:8px; margin:8px 0; }
+      .action, .infobox{ min-height:64px; padding:8px 10px; font-size:14px; }
+      .infobox .big{ font-size: clamp(16px, 4vw, 18px); }
+      .infobox .title{ font-size:11px; margin-bottom:4px; }
+      .infobox .sub{ font-size:11px; }
+    }
+    .action{ display:flex; gap:10px; align-items:center; justify-content:center; background: radial-gradient(600px 200px at 50% 0%, rgba(255,255,255,.08), rgba(255,255,255,0)); border:1px solid var(--line); border-radius: var(--radius-s); padding:14px 16px; text-decoration:none; color:var(--ink); box-shadow:var(--shadow); transition: transform .15s ease, border-color .2s ease, background .3s ease; min-height:84px; text-align:center; }
+    .action:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.28) }
+    .action svg{ width:20px; height:20px; stroke: var(--beige); stroke-width:2; fill:none }
 
-  .car-info{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-top:1px solid var(--line);gap:10px}
-  .car-name{font-weight:700;color:var(--beige);font-size:18px}
-  .chip-year{border:1px solid rgba(200,171,110,.55);border-radius:999px;padding:4px 10px;color:var(--beige);font-weight:700;font-size:12px;background:radial-gradient(380px 90px at 50% 0%,rgba(255,255,255,.08),rgba(255,255,255,0))}
-  footer{max-width:var(--maxw);margin:0 auto;padding:8px 16px 30px;color:var(--muted);text-align:center;font-size:13px}
-</style>
+    .infobox{
+      background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line); border-radius: var(--radius-s);
+      padding:12px 14px; box-shadow:var(--shadow);
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      min-height:84px; text-align:center; position:relative; /* per badge assoluto */
+    }
+    .infobox .title{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:6px}
+    .infobox .big{font-size: clamp(20px,3vw,26px); font-weight:700; color: var(--beige); line-height:1.1; display:flex; gap:8px; align-items: baseline; justify-content:center;}
+    .infobox .small{font-size: 12px; color: var(--muted)}
+    .infobox .sub{margin-top:4px; font-size: 12px; color: var(--muted);}
+    .infobox .big.state-good { color: var(--green); }
+    .infobox .big.state-warn { color: var(--orange); }
+    .infobox .big.state-bad  { color: var(--red); }
+
+    /* ====== Badge guidatori (alto a destra) + Modal ====== */
+    .drivers-wrap{
+      position:absolute; top:8px; right:8px; margin:0;
+      display:flex; justify-content:center;
+    }
+    .drivers-badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 10px; border-radius:999px;
+      background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line); box-shadow:var(--shadow);
+      cursor:pointer; color:var(--ink); font-weight:600; font-size:13px;
+      transition: transform .12s ease, border-color .2s ease, background .3s ease;
+    }
+    .drivers-badge:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.28); }
+    .drivers-badge svg{ width:16px; height:16px; stroke: var(--beige); fill:none; stroke-width:2; }
+
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:1200; }
+    .modal.is-open{ display:flex; }
+    .modal__backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.55); backdrop-filter: blur(2px); }
+    .modal__dialog{
+      position:relative; z-index:1; width:min(92vw, 420px);
+      background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow);
+      padding:14px 16px; color:var(--ink);
+    }
+    .modal__header{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+    .modal__title{ font-size:16px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+    .modal__close{ background:transparent; border:1px solid var(--line); border-radius:8px; padding:6px; cursor:pointer; }
+    .modal__close svg{ width:18px; height:18px; stroke:var(--ink); fill:none; }
+    .drivers-list{ margin:0; padding:0; list-style:none; }
+    .drivers-list li{ padding:8px 10px; border:1px solid var(--line); border-radius:10px; margin:6px 0; background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.01)); }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
-  <div class="nav-inner">
-    <button class="hamburger" id="btnHamburger" aria-label="Apri menu" aria-controls="menuDropdown" aria-expanded="false">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
-    <div class="brand-title">Menu</div>
-    <div class="nav-dropdown" id="menuDropdown">
-      <div class="nav-dropdown__inner">
-        <a href="index.html">Home</a>
-        <a href="pages/abarthsimca.html">Abarth Simca</a>
-        <a href="pages/alfaromeogiuliatisuper.html">Alfa Romeo Giulia TI Super</a>
-        <a href="pages/cadillacfletwood.html">Cadillac Fleetwood</a>
-        <a href="pages/fiat500l.html">Fiat 500 L</a>
-        <a href="pages/fiat500abarth.html">Fiat 500 Abarth</a>
-        <a href="pages/golfgti.html">Golf GTI</a>
-        <a href="pages/mercedes350sl.html">Mercedes 350 SL</a>
-        <a href="pages/mercedes600sl.html">Mercedes 600 SL</a>
-        <a href="pages/rollsroyce.html">Rolls Royce</a>
+  <!-- NAVBAR -->
+  <nav class="navbar" aria-label="Barra di navigazione" id="navbar">
+    <div class="nav-inner">
+      <button class="hamburger" id="btnHamburger" aria-label="Apri menu" aria-controls="menuDropdown" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div class="brand-title">Menu</div>
+
+      <div class="nav-dropdown" id="menuDropdown">
+        <div class="nav-dropdown__inner">
+          <a href="index.html">Home</a>
+          <a href="abarthsimca.html">Abarth Simca</a>
+          <a href="alfaromeogiuliatisuper.html">Alfa Romeo Giulia TI Super</a>
+          <a href="cadillacfletwood.html">Cadillac Fletwood</a>
+          <a href="fiat500l.html">Fiat 500 l</a>
+          <a href="fiat500abarth.html">Fiat 500 Abarth</a>
+          <a href="golfgti.html">Golf GTI</a>
+          <a href="mercedes300sl.html">Mercedes 300 SL</a>
+          <a href="mercedes350sl.html">Mercedes 350 SL</a>
+          <a href="mercedes600sl.html">Mercedes 600 SL</a>
+          <a href="rollsroyce.html">Rolls Royce</a>
+        </div>
       </div>
     </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- CHIP -->
+    <span class="chip" aria-label="Anno modello">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+        <path d="M8 11h8"/><path d="M8 15h6"/>
+      </svg>
+      <span class="chip-year">1971</span>
+    </span>
+
+    <!-- Topstrip -->
+    <section class="topstrip" aria-label="Intestazione macchina">
+      <div class="name">
+        <div>
+          <div class="name__label">Nome Macchina</div>
+          <div class="name__value">Mercedes 350 SL</div>
+        </div>
+      </div>
+
+      <div class="spec"><div class="label">Anno di Produzione</div><div class="value">1971-1980</div></div>
+      <div class="spec"><div class="label">Cilindrata</div><div class="value">3.499 cm³</div></div>
+      <div class="spec"><div class="label">Potenza</div><div class="value">200 CV a 5.800 giri/min</div></div>
+      <div class="spec"><div class="label">Velocità max</div><div class="value">210 km/h</div></div>
+      <div class="spec"><div class="label">Consumo</div><div class="value">15–16 l/100km</div></div>
+
+      <div class="spec-row-mobile" aria-hidden="true">
+        <div class="spec-mini"><div class="label">Anno</div><div class="value">1971-<br>1980</div></div>
+        <div class="spec-mini"><div class="label">Cilindrata</div><div class="value">3.499 cm³</div></div>
+        <div class="spec-mini"><div class="label">Potenza</div><div class="value">200 CV</div></div>
+        <div class="spec-mini"><div class="label">Velocità max</div><div class="value">210 km/h</div></div>
+        <div class="spec-mini"><div class="label">Consumo</div><div class="value">15–16 l/100km</div></div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery" aria-label="Galleria immagini">
+      <div class="slides" id="slides">
+        <figure class="slide is-active"><img src="mercedessllato.jpeg" alt="[NOME MACCHINA] – vista 1"></figure>
+        <figure class="slide"><img src="mercedes350coupe.jpeg" alt="[NOME MACCHINA] – vista 2"></figure>
+        <figure class="slide"><img src="mercedessl350.jpeg" alt="[NOME MACCHINA] – vista 3"></figure>
+        <figure class="slide"><img src="mercedes350città.jpeg" alt="[NOME MACCHINA] – vista 3"></figure>
+      </div>
+      <div class="nav" aria-hidden="true">
+        <button class="arrow nav-left" id="prev" aria-label="Immagine precedente"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg></button>
+        <button class="arrow nav-right" id="next" aria-label="Immagine successiva"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg></button>
+      </div>
+    </section>
+
+ <!-- Azioni + Info -->
+<section class="actions" aria-label="Azioni e stato documenti">
+  <a class="action" href="Istruzioniprovabarth.png" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6"/><path d="M8 14h8"/><path d="M8 18h6"/></svg>
+    <span>Istruzioni d’uso (PDF)</span>
+  </a>
+
+  <button class="action" id="btnPlayStory" type="button" aria-pressed="false" aria-label="Riproduci Abarth Simca Storia (MP3)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+    <span id="btnPlayStoryLabel">Ascolta la storia (MP3)</span>
+  </button>
+
+  <audio id="storyAudio" src="mercedes350sl.mp3" preload="none"></audio>
+
+  <div class="infobox" id="box-revisione" data-deadline-revisione="2025-10-20">
+    <div class="title">Revisione in:</div>
+    <div class="big"><span id="rev-days">--</span><span class="small">giorni</span></div>
+    <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
   </div>
-</nav>
 
-<!-- HERO -->
-<header class="hero">
-  <div class="neon">
-    <h1>Il Garage delle Leggende</h1>
-    <p>Clicca una vettura per scoprire la sua storia.</p>
+  <!-- Assicurazione con badge profilo (alto a destra) + popup -->
+  <div class="infobox" id="box-assicurazione"
+       data-deadline-assicurazione="2024-12-15"
+       data-guidatori="Mario Rossi|Giulia Verdi|Luca Bianchi">
+    <div class="title">Assicurazione</div>
+    <div class="big"><span id="ins-text">—</span></div>
+    <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
+
+    <!-- badge posizionato in alto a destra -->
+    <div class="drivers-wrap">
+      <button class="drivers-badge" id="btnDrivers" type="button" aria-haspopup="dialog" aria-controls="driversModal" title="Guidatori autorizzati">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span id="driversCount">0</span>
+      </button>
+    </div>
   </div>
-</header>
+</section>
 
-<!-- GRID -->
-<main class="grid" aria-label="Seleziona una vettura">
-  <!-- ESEMPIO CARD – cambia src delle immagini e del badge logo -->
-  <a class="car-card" href="pages/abarthsimca.html" aria-label="Abarth Simca 2000">
-    <div class="car-media">
-           <img src="disegnoabarthsimcamatita.png" alt="Abarth Simca 2000">
-      <div class="headlight" aria-hidden="true"></div>
+    <!-- Storia -->
+    <section class="story" id="storia">
+      <h2>Storia</h2>
+      <div class="divider"></div>
+      <p>La Mercedes-Benz 350 SL del 1971 è una delle roadster più eleganti e iconiche della storia: potente ma raffinata, sportiva ma confortevole, è diventata un’icona di lusso internazionale e rimane ancora oggi una delle youngtimer più ambite dai collezionisti.</p>
+
+      <h3 class="story-subtitle"> <strong>Perchè ha fatto la storia:</strong></h3>
+
+      <p><strong>Inizio di una leggenda:</strong>È stato il primo modello della serie R107, una delle roadster Mercedes più longeve e amate, rimasta in produzione per ben 18 anni (1971–1989).</p>
+      <p><strong>Design intramontabile:</strong> Linee eleganti e robuste firmate da Friedrich Geiger e Paul Bracq, che hanno definito il concetto di roadster di lusso anni ’70 e ’80.</p>
+      <p><strong>Tecnologia e sicurezza:</strong> Tra le prime cabriolet con zone a deformazione programmata, serbatoio posteriore protetto, volante a deformazione controllata: un enorme passo avanti in termini di sicurezza attiva e passiva.</p>
+      <p><strong>Il V8 per tutti i giorni:</strong> Il nuovo motore 3.5 V8 da 200 CV offriva prestazioni brillanti ma anche comfort, rendendo la SL una sportiva adatta all’uso quotidiano e ai lunghi viaggi.</p>
+      <p><strong>Status symbol globale:</strong> Guidata da star di Hollywood, politici e magnati, la 350 SL divenne un’icona di stile e successo negli anni ’70.</p>
+      <p><strong>Collezionismo e mito:</strong> Oggi è tra le youngtimer Mercedes più ricercate, riconosciuta come uno spartiacque nella storia della casa di Stoccarda.</p>
+  </div>
+
+  <!-- Designer -->
+  <section class="designer">
+    <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
+    <div>
+      <div class="designer__label">Designer</div>
+      <div class="designer__name">Friedrich Geiger <span class="designer__years">(1907-1996)</span></div>
+      <p class="designer__text">Come primo capo designer di Mercedes-Benz, segnò la storia dell’automobile con la creazione di modelli leggendari come la 300 SL “Ali di Gabbiano”. Con il suo stile elegante e aerodinamico, riuscì a fondere bellezza e innovazione tecnica, trasformando ogni vettura in un’opera d’arte su ruote. La sua visione contribuì a definire l’identità di Mercedes come simbolo mondiale di prestigio, innovazione e design senza tempo.</p>
     </div>
-    <div class="car-info"><span class="car-name">Abarth Simca 2000</span><span class="chip-year">1965</span></div>
-  </a>
+  </section>
 
-  <a class="car-card" href="pages/alfaromeogiuliatisuper.html" aria-label="Alfa Romeo Giulia TI Super">
-    <div class="car-media">
-      <img src="disegnoalfaromeo.png" alt="Alfa Romeo Giulia TI Super">
-      <div class="headlight"></div>
+  <!-- Modal guidatori -->
+  <div class="modal" id="driversModal" role="dialog" aria-modal="true" aria-labelledby="driversTitle">
+    <div class="modal__backdrop" data-close="1"></div>
+    <div class="modal__dialog">
+      <div class="modal__header">
+        <div class="modal__title" id="driversTitle">Guidatori autorizzati</div>
+        <button class="modal__close" type="button" aria-label="Chiudi" data-close="1">
+          <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <ul class="drivers-list" id="driversList"></ul>
     </div>
-    <div class="car-info"><span class="car-name">Alfa Romeo Giulia TI Super</span><span class="chip-year">1964</span></div>
-  </a>
+  </div>
 
-  <a class="car-card" href="pages/cadillacfletwood.html" aria-label="Cadillac Fleetwood 1972">
-    <div class="car-media">
-      <img src="disegnocadillacmatita .png" alt="Cadillac Fleetwood">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Cadillac Fleetwood</span><span class="chip-year">1972</span></div>
-  </a>
+  <script>
+    /* Dropdown open/close */
+    (function(){
+      const navbar = document.getElementById('navbar');
+      const btn = document.getElementById('btnHamburger');
+      const dropdown = document.getElementById('menuDropdown');
 
-  <a class="car-card" href="pages/fiat500l.html" aria-label="Fiat 500 L 1973">
-    <div class="car-media">
-      <img src="disegnofiat500Lmatita.png" alt="Fiat 500 L">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Fiat 500 L</span><span class="chip-year">1973</span></div>
-  </a>
+      function open(){
+        navbar.classList.add('is-open');
+        btn.setAttribute('aria-expanded','true');
+      }
+      function close(){
+        navbar.classList.remove('is-open');
+        btn.setAttribute('aria-expanded','false');
+      }
+      function toggle(){
+        navbar.classList.contains('is-open') ? close() : open();
+      }
 
-  <a class="car-card" href="pages/golfgti.html" aria-label="Volkswagen Golf GTI 1979">
-    <div class="car-media">
-      <img src="disegnogolfmatita.png" alt="Volkswagen Golf GTI">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Golf GTI</span><span class="chip-year">1979</span></div>
-  </a>
+      btn.addEventListener('click', toggle);
 
-  <a class="car-card" href="pages/mercedes350sl.html" aria-label="Mercedes-Benz 350 SL 1971">
-    <div class="car-media">
-           <img src="disegnomercedes300SLmatita .png" alt="Mercedes-Benz 350 SL">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Mercedes-Benz 350 SL</span><span class="chip-year">1971</span></div>
-  </a>
+      window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
 
-  <a class="car-card" href="pages/mercedes600sl.html" aria-label="Mercedes-Benz 600 SL 1995">
-    <div class="car-media">
-          <img src="disegnomercedes600SLmatita.png" alt="Mercedes-Benz 600 SL">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Mercedes-Benz 600 SL</span><span class="chip-year">1995</span></div>
-  </a>
+      document.addEventListener('click', (e)=>{
+        if (!navbar.classList.contains('is-open')) return;
+        const isInside = navbar.contains(e.target);
+        if (!isInside) close();
+      });
 
-  <a class="car-card" href="pages/rollsroyce.html" aria-label="Rolls-Royce Silver Shadow 1967">
-    <div class="car-media">
-            <img src="disegnorollsroys.png" alt="Rolls-Royce Silver Shadow">
-      <div class="headlight"></div>
-    </div>
-    <div class="car-info"><span class="car-name">Rolls-Royce Silver Shadow</span><span class="chip-year">1967</span></div>
-  </a>
-</main>
+      dropdown.addEventListener('click', (e)=> e.stopPropagation());
+    })();
 
-<footer>© Il Garage delle Leggende – Scopri le auto che hanno fatto la storia</footer>
+    /* Slideshow */
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const dotsWrap = document.getElementById('dots');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      let i = 0;
+      function renderDots(){
+        if(!dotsWrap) return;
+        dotsWrap.innerHTML = '';
+        slides.forEach((_, idx) => {
+          const d = document.createElement('button');
+          d.className = 'dot' + (idx === i ? ' is-active' : '');
+          d.addEventListener('click', () => go(idx));
+          dotsWrap.appendChild(d);
+        });
+      }
+      function go(n){slides[i].classList.remove('is-active');i=(n+slides.length)%slides.length;slides[i].classList.add('is-active');renderDots();}
+      renderDots();
+      next?.addEventListener('click',()=>go(i+1));
+      prev?.addEventListener('click',()=>go(i-1));
 
-<script>
-  // Menu mobile
-  const navbar = document.getElementById('navbar');
-  const btn = document.getElementById('btnHamburger');
-  const dropdown = document.getElementById('menuDropdown');
-  btn.addEventListener('click', ()=>{
-    const open = navbar.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // Swipe touch
+      let x0=null; const el=document.querySelector('.slides');
+      el?.addEventListener('touchstart', e => { x0 = e.touches[0].clientX }, {passive:true});
+      el?.addEventListener('touchend', e => {
+        if(x0===null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if(Math.abs(dx)>30) { dx<0 ? go(i+1) : go(i-1); }
+        x0=null;
+      }, {passive:true});
+    })();
+
+    /* Utils date */
+    function parseISO(d){ return new Date(d + 'T00:00:00') }
+    function fmtIT(date){ const dd=String(date.getDate()).padStart(2,'0'); const mm=String(date.getMonth()+1).padStart(2,'0'); const yyyy=date.getFullYear(); return `${dd}.${mm}.${yyyy}`; }
+    function daysBetween(today, target){ const MS = 24*60*60*1000; return Math.max(0, Math.ceil((target - today)/MS)); }
+
+   /* Revisione */
+(function(){
+  const box = document.getElementById('box-revisione'); 
+  if (!box) return;
+
+  const raw = box.getAttribute('data-deadline-revisione');
+  const today = new Date();
+  const today0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const deadline = parseISO(raw);
+  const days = daysBetween(today0, deadline);
+
+  const big = box.querySelector('.big');
+  const daysEl = document.getElementById('rev-days');
+  daysEl.textContent = days;
+
+  big.classList.remove('state-good','state-warn','state-bad');
+
+  if (days <= 30) big.classList.add('state-bad');
+  else if (days <= 60) big.classList.add('state-warn');
+  else big.classList.add('state-good');
+
+  document.getElementById('rev-deadline').textContent = 'scadenza: ' + fmtIT(deadline);
+})();
+
+/* Assicurazione + badge & popup */
+(function(){
+  const box = document.getElementById('box-assicurazione'); 
+  if (!box) return;
+
+  const raw = box.getAttribute('data-deadline-assicurazione');
+  const today = new Date();
+  const today0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const deadline = parseISO(raw);
+
+  const big = box.querySelector('.big');
+  const txt = document.getElementById('ins-text');
+  const sub = document.getElementById('ins-deadline');
+
+  big.classList.remove('state-good','state-warn','state-bad');
+
+  if (today0 < deadline) {
+    txt.textContent = 'Sì';
+    const days = daysBetween(today0, deadline);
+    big.classList.add(days <= 30 ? 'state-warn' : 'state-good');
+    sub.textContent = 'scadenza: ' + fmtIT(deadline);
+    sub.style.display = '';
+  } else {
+    txt.textContent = 'No';
+    big.classList.add('state-bad');
+    sub.style.display = 'none';
+  }
+
+  /* Badge e popup */
+  const badgeBtn = document.getElementById('btnDrivers');
+  const countEl = document.getElementById('driversCount');
+  const modal = document.getElementById('driversModal');
+  const listEl = document.getElementById('driversList');
+
+  const rawDrivers = (box.getAttribute('data-guidatori')||'').trim();
+  const drivers = rawDrivers ? rawDrivers.split('|').map(s=>s.trim()).filter(Boolean) : [];
+
+  countEl.textContent = String(drivers.length);
+
+  listEl.innerHTML = '';
+  drivers.forEach(name=>{
+    const li=document.createElement('li'); li.textContent = name; listEl.appendChild(li);
   });
-  document.addEventListener('click', e=>{
-    if(!navbar.contains(e.target)) navbar.classList.remove('is-open');
+
+  function openModal(){
+    modal.classList.add('is-open');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(){
+    modal.classList.remove('is-open');
+    document.body.style.overflow='';
+  }
+
+  badgeBtn?.addEventListener('click', openModal);
+  modal.addEventListener('click', (e)=>{ if (e.target.dataset.close==='1') closeModal(); });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && modal.classList.contains('is-open')) closeModal(); });
+})();
+
+/* Play / Pause audio tile */
+(function(){
+  const btn = document.getElementById('btnPlayStory');
+  const audio = document.getElementById('storyAudio');
+  const label = document.getElementById('btnPlayStoryLabel');
+  if(!btn || !audio) return;
+
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      if (audio.paused) {
+        await audio.play();
+        btn.setAttribute('aria-pressed','true');
+        label.textContent = 'Pausa audio';
+      } else {
+        audio.pause();
+        btn.setAttribute('aria-pressed','false');
+        label.textContent = 'Ascolta la storia (MP3)';
+      }
+    } catch (err) {
+      console.warn('Playback failed:', err);
+      window.open('abarthsimcastoria.mp3', '_blank', 'noopener');
+    }
   });
-</script>
+
+  audio.addEventListener('ended', () => {
+    btn.setAttribute('aria-pressed','false');
+    label.textContent = 'Ascolta la storia (MP3)';
+  });
+})();
+  </script>
 </body>
 </html>
