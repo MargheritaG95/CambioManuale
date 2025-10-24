@@ -277,7 +277,34 @@
     .modal__footer{ display:flex; justify-content:flex-end; margin-top:12px; }
     .btn{ appearance:none; border:1px solid var(--line); background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); color:var(--ink); padding:8px 12px; border-radius:10px; cursor:pointer; }
     /* === FINE AGGIUNTE === */
-  </style>
+/* --- Fix badge assicurazione su mobile: affiancato a "Sì" --- */
+@media (max-width:560px){
+  #box-assicurazione{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "title title"
+      "big   badge"
+      "sub   sub";
+    align-items: center;
+    justify-content: center;
+    gap: 6px 8px;
+    padding-bottom: 10px; /* un filo di spazio extra */
+  }
+  #box-assicurazione .title{ grid-area: title; }
+  #box-assicurazione .big{ grid-area: big; display:flex; align-items:center; justify-content:center; gap:6px; }
+  #box-assicurazione .sub{ grid-area: sub; }
+
+  /* il badge esce dal posizionamento assoluto e si affianca al "Sì" */
+  #box-assicurazione .badgeCount{
+    grid-area: badge;
+    position: static;
+    margin: 0;
+    transform: none;
+  }
+}
+
+</style>
 </head>
 <body>
 
@@ -380,7 +407,7 @@
   </div>
 
   <!-- ====== BOX ASSICURAZIONE con BADGE + POPUP (solo aggiunte qui) ====== -->
-  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15"
+ <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15"
        style="position:relative"
        data-drivers='[
          {"name":"Margherita B.","note":"Titolare polizza"},
