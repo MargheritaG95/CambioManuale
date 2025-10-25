@@ -173,7 +173,7 @@
   
 
     /* ====== Azioni / Info ====== */
-    .actions{ display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: var(--gap) 0; max-width: var(--maxw); align-items:stretch; }
+    .actions{ display:grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); margin: var(--gap) 0; max-width: var(--maxw); alignitems:stretch; }
     @media (max-width:1000px){ .actions{ grid-template-columns:1fr 1fr } }
     @media (max-width:560px){
       .actions{ grid-template-columns:1fr 1fr; gap:8px; margin:8px 0; }
@@ -259,6 +259,59 @@
       .designer__years{ display:block; }
       .designer__text{ grid-row:auto; margin:auto; font-size:1rem; }
     }
+    /* ========= AGGIUNTE SOLO PER IL BADGE + POPUP ========= */
+
+/* Badge (icona profilo + numero) */
+.badgeCount{
+  position:absolute; top:8px; right:8px;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:4px 8px; border-radius:999px;
+  border:1px solid var(--line);
+  background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  color:var(--beige); font-size:12px; line-height:1;
+  cursor:pointer;
+}
+.badgeCount svg{ width:14px; height:14px; }
+
+/* Modal (popup) minimal */
+.modal[hidden]{ display:none !important; }
+.modal{ position: fixed; inset:0; display:grid; place-items:center; background: rgba(5,10,20,.88); backdrop-filter: blur(6px); z-index: 2000; padding: 24px; }
+.modal__dialog{ width:min(560px, 94vw); background: linear-gradient(180deg, #101b2a, #0c1420); border:1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 18px; color: var(--ink); }
+.modal__title{ margin:0 0 10px; font-size: clamp(18px,2.4vw,22px); color: var(--beige); }
+.drivers{ display:grid; gap:10px; margin-top:8px; }
+.driver{ display:flex; gap:10px; align-items:center; padding:10px; border:1px solid var(--line); border-radius:12px; background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); }
+.avatar{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:#122338; color:var(--beige); font-weight:700; }
+.driver .name{ font-weight:600; }
+.driver .note{ font-size:12px; color:var(--muted); }
+.modal__footer{ display:flex; justify-content:flex-end; margin-top:12px; }
+.btn{ appearance:none; border:1px solid var(--line); background:linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); color:var(--ink); padding:8px 12px; border-radius:10px; cursor:pointer; }
+
+/* --- Fix badge assicurazione su mobile: affiancato a "Sì" --- */
+@media (max-width:560px){
+  #box-assicurazione{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas:
+      "title title"
+      "big   badge"
+      "sub   sub";
+    align-items: center;
+    justify-content: center;
+    gap: 6px 8px;
+    padding-bottom: 10px;
+  }
+  #box-assicurazione .title{ grid-area: title; }
+  #box-assicurazione .big{ grid-area: big; display:flex; align-items:center; justify-content:center; gap:6px; }
+  #box-assicurazione .sub{ grid-area: sub; }
+
+  #box-assicurazione .badgeCount{
+    grid-area: badge;
+    position: static;
+    margin: 0;
+    transform: none;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -297,7 +350,7 @@
     <!-- CHIP -->
     <span class="chip" aria-label="Anno modello">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+        <path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2 2V4a2 2 0 0 1 2-2z"/>
         <path d="M8 11h8"/><path d="M8 15h6"/>
       </svg>
       <span class="chip-year">1954</span>
@@ -365,11 +418,25 @@
     <div class="sub" id="rev-deadline">scadenza: --.--.----</div>
   </div>
 
-  <div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2024-12-15">
-    <div class="title">Assicurazione</div>
-    <div class="big"><span id="ins-text">—</span></div>
-    <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
-  </div>
+ <!-- ====== BOX ASSICURAZIONE (UGUALE ALLA ROLLS) ====== -->
+<div class="infobox" id="box-assicurazione" data-deadline-assicurazione="2025-12-15" style="position:relative"
+     data-drivers='[
+       {"name":"Francesco B.S.","note":"Titolare polizza"},
+       {"name":"Castellini","note":"Uso saltuario"},
+       {"name":"Andrea B.S.","note":"Limite 5000 km/anno"}
+     ]'>
+  <!-- badge profilo + numero -->
+  <button class="badgeCount" id="driversBadge" type="button" title="Guidatori autorizzati" aria-label="Guidatori: 0">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.8 0 5-2.2 5-5s-2.2-5-5-5-5 2.2-5 5 2.2 5 5 5zm0 2c-4.4 0-8 2.2-8 5v2h16v-2c0-2.8-3.6-5-8-5z" fill="currentColor"/></svg>
+    <span id="driversCount">0</span>
+  </button>
+
+  <div class="title">Assicurazione</div>
+  <div class="big"><span id="ins-text">—</span></div>
+  <div class="sub" id="ins-deadline">scadenza: --.--.----</div>
+</div>
+<!-- ====== FINE BOX ASSICURAZIONE ====== -->
+
 </section>
 
     <!-- Storia -->
@@ -391,7 +458,7 @@
 <p><strong>Design e Fascino Senza Tempo:</strong> Il design della 300 SL, firmato da Friedrich Geiger, combinava linee sinuose, proporzioni equilibrate e dettagli sofisticati, creando un’estetica ancora oggi considerata perfetta. La sua eleganza e il suo fascino hanno conquistato collezionisti e appassionati di tutto il mondo, rendendola una delle auto più desiderate e preziose di sempre.</p>
 
 <p><strong>Eredità Storica:</strong> La 300 SL non fu solo un successo tecnico, ma anche culturale. Simbolo di rinascita e innovazione tedesca nel dopoguerra, rappresentò la capacità di Mercedes-Benz di coniugare prestazioni, lusso e design in un unico modello leggendario. Oggi è un’icona assoluta, un riferimento per ogni appassionato di auto classiche.</p>
-
+</section>
   <!-- Designer -->
   <section class="designer">
     <div class="designer__img"><img src="Giovanni Michelotti.jpg" alt="Giovanni Michelotti" /></div>
@@ -401,8 +468,20 @@
       <p class="designer__text">Come leggendario designer di Mercedes-Benz, contribuì a creare una delle auto più iconiche di tutti i tempi: la 300 SL “Ali di Gabbiano”. Con il suo design audace e aerodinamico, trasformò l’innovazione tecnica in pura eleganza, fondendo prestazioni da competizione e raffinatezza estetica. La sua visione rivoluzionaria rese la 300 SL un simbolo immortale di ingegneria e stile, consacrandola tra le vetture più celebrate della storia dell’automobile.</p>
     </div>
   </section>
+      <!-- ====== MODAL POPUP (come Rolls) ====== -->
+<div class="modal" id="driversModal" role="dialog" aria-modal="true" aria-labelledby="driversTitle" hidden>
+  <div class="modal__dialog" role="document">
+    <h3 class="modal__title" id="driversTitle">Guidatori autorizzati</h3>
+    <div class="drivers" id="driversList"></div>
+    <div class="modal__footer">
+      <button class="btn" type="button" id="driversClose">Chiudi</button>
+    </div>
+  </div>
+</div>
+<!-- ====== FINE MODAL POPUP ====== -->
 
   <script>
+
     /* Dropdown open/close */
     (function(){
       const navbar = document.getElementById('navbar');
@@ -501,7 +580,6 @@
 })();
 
 /* Assicurazione */
-/* Assicurazione */
 (function(){
   const box = document.getElementById('box-assicurazione'); 
   if (!box) return;
@@ -533,38 +611,86 @@
   }
 })();
 
+/* ========= JS AGGIUNTO SOLO PER BADGE + POPUP ========= */
+(function(){
+  const box = document.getElementById('box-assicurazione');
+  if(!box) return;
 
-         /* Play / Pause audio tile */
-    (function(){
-      const btn = document.getElementById('btnPlayStory');
-      const audio = document.getElementById('storyAudio');
-      const label = document.getElementById('btnPlayStoryLabel');
-      if(!btn || !audio) return;
+  const drivers = JSON.parse(box.getAttribute('data-drivers') || '[]');
+  const count = Array.isArray(drivers) ? drivers.length : 0;
 
-      btn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        try {
-          if (audio.paused) {
-            await audio.play(); // user click allows playback
-            btn.setAttribute('aria-pressed','true');
-            label.textContent = 'Pausa audio';
-          } else {
-            audio.pause();
-            btn.setAttribute('aria-pressed','false');
-            label.textContent = 'Ascolta la storia (MP3)';
-          }
-        } catch (err) {
-          console.warn('Playback failed:', err);
-          // fallback: apri il file in una nuova scheda
-          window.open('abarthsimcastoria.mp3', '_blank', 'noopener');
-        }
-      });
+  const countEl = document.getElementById('driversCount');
+  const badgeBtn = document.getElementById('driversBadge');
+  const modal = document.getElementById('driversModal');
+  const list = document.getElementById('driversList');
+  const closeBtn = document.getElementById('driversClose');
 
-      audio.addEventListener('ended', () => {
+  if(countEl) countEl.textContent = count;
+  if(badgeBtn) badgeBtn.setAttribute('aria-label', 'Guidatori: ' + count);
+
+  function openModal(){
+    // popola elenco
+    list.innerHTML = '';
+    drivers.forEach(d=>{
+      const initials = d.name.split(' ').map(p=>p[0]).join('').slice(0,2).toUpperCase();
+      const row = document.createElement('div');
+      row.className = 'driver';
+      row.innerHTML = `
+        <div class="avatar">${initials}</div>
+        <div>
+          <div class="name">${d.name}</div>
+          <div class="note">${d.note || ''}</div>
+        </div>
+      `;
+      list.appendChild(row);
+    });
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  badgeBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  window.addEventListener('keydown', (e)=>{ if(!modal.hidden && e.key==='Escape') closeModal(); });
+})();
+
+/* Play / Pause audio tile */
+(function(){
+  const btn = document.getElementById('btnPlayStory');
+  const audio = document.getElementById('storyAudio');
+  const label = document.getElementById('btnPlayStoryLabel');
+  if(!btn || !audio) return;
+
+  btn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      if (audio.paused) {
+        await audio.play(); // user click allows playback
+        btn.setAttribute('aria-pressed','true');
+        label.textContent = 'Pausa audio';
+      } else {
+        audio.pause();
         btn.setAttribute('aria-pressed','false');
         label.textContent = 'Ascolta la storia (MP3)';
-      });
-    })();
+      }
+    } catch (err) {
+      console.warn('Playback failed:', err);
+      // fallback: apri il file in una nuova scheda
+      window.open('abarthsimcastoria.mp3', '_blank', 'noopener');
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.setAttribute('aria-pressed','false');
+    label.textContent = 'Ascolta la storia (MP3)';
+  });
+})();
   </script>
+
+
 </body>
 </html>
